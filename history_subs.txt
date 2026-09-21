@@ -2454,3 +2454,8 @@ https://raw.githubusercontent.com/roosterkid/openproxylist/main/V2RAY_RAW.txt
 https://raw.githubusercontent.com/MahanKenway/Freedom-V2Ray/main/sub
 https://raw.githubusercontent.com/batonogov/xray-health-exporter/main/sub/mix
 https://raw.githubusercontent.com/EMUEM/EMUNEL/main/v2ray
+https://raw.githubusercontent.com/byst4nder/starList/main/sub.txt
+https://raw.githubusercontent.com/byst4nder/starList/main/sub/mix
+https://raw.githubusercontent.com/byst4nder/starList/main/sub/all.txt
+https://raw.githubusercontent.com/byst4nder/starList/main/v2ray
+https://raw.githubusercontent.com/byst4nder/starList/main/sub
