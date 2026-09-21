@@ -1,14 +1,10 @@
-https://discord.gg/jP8KfhDhyN | Нод: 3
-https://raw.githubusercontent.com/itsyebekhe/PSG/70e44a422eedfd86c02664b2940d21c5e029b49d/subscriptions/xray/mix | Нод: 329
-https://cdn.jsdelivr.net/gh/ShatakVPN/ConfigForge-V2Ray@main/configs/vless.txt | Нод: 237
-https://cdn.jsdelivr.net/gh/ShatakVPN/ConfigForge-V2Ray@main/configs/shadowsocks.txt | Нод: 110
-https://cdn.jsdelivr.net/gh/ShatakVPN/ConfigForge-V2Ray@main/configs/vmess.txt | Нод: 28
-https://cdn.jsdelivr.net/gh/ShatakVPN/ConfigForge-V2Ray@main/configs/trojan.txt | Нод: 7
-https://cdn.jsdelivr.net/gh/ShatakVPN/ConfigForge-V2Ray@main/configs/light.txt | Нод: 30
-https://cdn.jsdelivr.net/gh/ShatakVPN/ConfigForge-V2Ray@main/configs/all.txt | Нод: 529
-https://raw.githubusercontent.com/code3-dev/ProxyCloud/a020166fa1fdb2f87aa742600f7991bb9af19cee/assets/languages/ru.json | Нод: 3
-http://discord.snapshot.org | Нод: 3
-https://discord.gg/aSqVEa5WpT
+https://raw.githubusercontent.com/itsyebekhe/PSG/70e44a422eedfd86c02664b2940d21c5e029b49d/subscriptions/xray/mix | Ключей: 329
+https://cdn.jsdelivr.net/gh/ShatakVPN/ConfigForge-V2Ray@main/configs/vless.txt | Ключей: 237
+https://cdn.jsdelivr.net/gh/ShatakVPN/ConfigForge-V2Ray@main/configs/shadowsocks.txt | Ключей: 110
+https://cdn.jsdelivr.net/gh/ShatakVPN/ConfigForge-V2Ray@main/configs/vmess.txt | Ключей: 28
+https://cdn.jsdelivr.net/gh/ShatakVPN/ConfigForge-V2Ray@main/configs/trojan.txt | Ключей: 7
+https://cdn.jsdelivr.net/gh/ShatakVPN/ConfigForge-V2Ray@main/configs/light.txt | Ключей: 30
+https://cdn.jsdelivr.net/gh/ShatakVPN/ConfigForge-V2Ray@main/configs/all.txt | Ключей: 529
 https://raw.githubusercontent.com/TheMRLL/WinXray/caedd0a653b1a9704bc8364867f1b4e8ad59c590/sub/introduce.md
 https://1111.kunlun01.com/api/kunlun01/41e8ba52ba33171cb1437731ad6bfe82
 https://app.sublink.works/x/fuAVJlK
@@ -79,7 +75,6 @@ https://raw.githubusercontent.com/rqzbeh/3x-ui-standalone/5eeb54cb0fcf179f6dc4de
 https://raw.githubusercontent.com/h31297908-design/3x-ui-RAILWAY/a3baada19aea833cb0be1e08ada168a05fc3c9e1/internal/sub/external_config_test.go
 https://raw.githubusercontent.com/xinggaoya/sing-box-windows/42ee1fe568ba4654458011906938ec11a2275038/src-tauri/src/app/network/subscription_service/parser.rs
 https://raw.githubusercontent.com/fagao-ai/kitty-pro/e9eb5376e28575c605dbb09746b1bb5c09d9c624/packages/ui/src/app.rs
-https://raw.githubusercontent.com/aiksatria/pvc/86fee1c685d8a360b96ca9c88c72273d00669375/assets/languages/ru.json
 https://raw.githubusercontent.com/risimoDev/ufobzk/82bfdc087562c5ca97f3bd448c7dd264832e5389/app/xray.py
 https://raw.githubusercontent.com/hikaryd/dotfiles/c95c03c52060a83959b84381251a1888c2969e07/config/xray-codex/codex-proxy.py
 https://raw.githubusercontent.com/HIDDIFYplas/-HIDDIFY_plas/5ed89b076081cd8b49f85cd7a5320899480b65e2/72HIDDIFY_plas
@@ -88,7 +83,6 @@ https://raw.githubusercontent.com/leon4rdo78/IPextract/a633c8bb693ba888911f378e0
 https://raw.githubusercontent.com/leon4rdo78/IPextract/a633c8bb693ba888911f378e008f3479be13b54b/archiveorg/20240731_085729/proxies_part_147.txt
 https://raw.githubusercontent.com/tripplemay/nextpanel/f5d4a1221e1480144b10b2120a30a0e663b61296/apps/server/src/nodes/nodes.service.ts
 https://tt.vg/freev2
-https://apps.apple.com/us/app/v2box-v2ray-client/id6446814690
 https://raw.githubusercontent.com/w1770946466/Auto_proxy/665811c97ce0eace985efd59f239395d10418564/sub/2402/240218.txt
 https://raw.githubusercontent.com/ShatakVPN/ConfigForge-V2Ray/871825186739330cf6253310a84cd3a435347d0d/configs/jp/all.txt
 https://raw.githubusercontent.com/shabane/kamaji/9fca1d72c3db1ecc9e6b48ba37f136c0533970b7/hub/best.txt
@@ -130,8 +124,6 @@ https://raw.githubusercontent.com/proco2024/channel/3417d4b6f4aee4a03292f7245382
 https://raw.githubusercontent.com/proco2024/channel/3417d4b6f4aee4a03292f72453827496468c24ab/Telegram:@config_proxy-14030920-003.txt
 https://raw.githubusercontent.com/elanski/proxy-preflight/2b97b077c3e338c5186d5500b572723a4d438a56/sources_tg/VIPROXYS.txt
 https://raw.githubusercontent.com/Amirchelios/scaling-potato/98d174c6b952b6f51f5e335f8cbc24314566b6ce/ME/file/mci/81.txt
-https://discord.gg/pAbnFJrkgZ
-https://discord.gg/Cppx2vSPVP
 https://free-sub.indevs.in/shield
 https://free-sub.indevs.in/vip
 https://free-sub.indevs.in/star
@@ -163,7 +155,6 @@ https://raw.githubusercontent.com/ftiasch/sing_tools/093427920e5936fb94048bb2e34
 https://raw.githubusercontent.com/Mystery00/sing-box-sub-converter/1860229c412f79084a2d12142ccd7bd17481c1e7/CLAUDE.md
 https://raw.githubusercontent.com/l-ning/Subscription-Converter/126539be55555426672fa2f812f4e85dd06c01f3/README.md
 https://raw.githubusercontent.com/howdeploy/Xrayebator/0451a7e491ed57a758fcbbc2b35e10ef0e658fc9/README.md
-https://apps.apple.com/app/v2box-v2ray-client/id6446814690
 https://www.happ.su/main/faq/adding-configuration-subscription
 https://raw.githubusercontent.com/19likely/emergency/4a2f4a810c2e425e41953e96482264d6737b87a8/sub.txt
 https://raw.githubusercontent.com/Abobirec/bezdelnicha-vpn0chek/7fbcc95c8eb4c0b12471133018b382d1a6982b68/mehran1404-v2ray-sub.txt
@@ -281,7 +272,6 @@ https://gitverse.ru/api/repos/flaafix/AetrisVPN_Black_list/raw/branch/master/con
 https://gh-proxy.com/raw.githubusercontent.com/Barabama/FreeNodes/main/nodes/yudou66.txt
 https://bp.sub.cmliussss.net/sub?host=ts2.wangju.me&ips=114.34.202.224%3A10004%23%E5%8F%B0%E6%B9%BE%7Ccloudflare.182682.xyz%7C%23%E7%AC%AC%E4%B8%89%E6%96%B9%E7%BB%B4%E6%8A%A4%E7%9A%84%E4%BC%98%E9%80%89%E5%AE%98%E6%96%B9%E5%9F%9F%E5%90%8D%EF%BC%88%E6%9C%AA%E5%A4%87%E6%B3%A8%E5%87%BA%E5%A4%84%E7%9A%84%E4%B8%BA%E6%9C%AA%E7%9F%A5%EF%BC%89%7Ccfip.xxxxxxxx.tk%23OTC%E6%8F%90%E4%BE%9B%E7%BB%B4%E6%8A%A4%E5%AE%98%E6%96%B9%E4%BC%98%E9%80%89%7Cbestcf.onecf.eu.org%23Mingyu%E6%8F%90%E4%BE%9B%E7%BB%B4%E6%8A%A4%E5%AE%98%E6%96%B9%E4%BC%98%E9%80%89%7Ccf.zhetengsha.eu.org%23%E5%B0%8F%E4%B8%80%E6%8F%90%E4%BE%9B%E7%BB%B4%E6%8A%A4%E5%AE%98%E6%96%B9%E4%BC%98%E9%80%89%7Cxn--b6gac.eu.org%7Ccfip.1323123.xyz%7Ccf.0sm.com%7Ccf.877771.xyz%7Cnrtcfdns.zone.id%7Claxcfdns.zone.id%7Csjccfdns.zone.id%7Cfracfdns.zone.id%7Cwww.cnae.top%7C123.cf.090227.xyz%7C123.cloudflare.182682.xyz%7Ccfip.xxxxxxxx.tk%7Ccdn.2020111.xyz%7Ccloudflare.czkcdn.cn%7Ccloudflare.182682.xyz%7C7710.cloudflare.182682.xyz%7Ccdn.9889888.xyz%7Ccf.cdn.saas.fis.ink%7Cfreeyx.cloudflare88.eu.org%7Ccfyx.tencentapp.cn%7Ccloudflare-ddns.zone.id%7Ccf.090227.xyz%7Ccmcc.090227.xyz%7Ccloudflare.182682.xyz%7C%23%E7%AC%AC%E4%B8%89%E6%96%B9%E7%BB%B4%E6%8A%A4%E7%9A%84%E4%BC%98%E9%80%89%E5%8F%8D%E4%BB%A3%E5%9F%9F%E5%90%8D%7Cproxy.xxxxxxxx.tk%23OTC%E6%8F%90%E4%BE%9B%E7%BB%B4%E6%8A%A4%E5%8F%8D%E4%BB%A3%E4%BC%98%E9%80%89&proxyip=ProxyIP.US.CMLiussss.net&uuid=b3b4d250-ee7f-4214-a61b-e71ecc56c2d0
 https://bp.sub.cmliussss.net/sub?host=ts2.wangju.me&sub=owo.o00o.ooo&proxyip=ProxyIP.US.CMLiussss.net&uuid=b3b4d250-ee7f-4214-a61b-e71ecc56c2d0&ed=2560
-https://apps.apple.com/ga/app/v2box-v2ray-client/id6446814690?l=en-GB&platform=mac
 https://bp.sub.cmliussss.net/sub?host=ts2.il.ip-ddns.com&sub=owo.o00o.ooo&subapi=default&subconfig=default&uuid=b9a4e9a7-97f4-4908-a80e-030441deb1f5&ed=2560
 https://nodebuf.com/files/public/cmrduwrf40ad4pi5wbriuj118/download
 https://app.sublink.works/x/WVhK4Am
@@ -649,3 +639,10 @@ https://raw.githubusercontent.com/vpnineh/v1/06c77085d046c4737450af430898627d85d
 https://raw.githubusercontent.com/parhelia512/zd/8338720fb9c6ac5d3c317b998ecb4ac1f24831e0/sub/2302/230206.txt
 https://raw.githubusercontent.com/vpnineh/v1/06c77085d046c4737450af430898627d85dbf986/update/Archive_2025-01-29 04:07:59.txt
 https://raw.githubusercontent.com/dostmehdi/v2ray-configs/48d3c941b76479a2a296afc61640066ca150ce42/200.txt
+https://raw.githubusercontent.com/freefq/free/master/v2 | Ключей: 15
+https://raw.githubusercontent.com/itsyebekhe/PSG/main/subscriptions/xray/mix | Ключей: 329
+https://raw.githubusercontent.com/ts-sf/fly/main/v2 | Ключей: 201
+https://raw.githubusercontent.com/ermaozi/get_subscribe/main/subscribe/v2ray.txt | Ключей: 195
+https://raw.githubusercontent.com/Pawdroid/Free-servers/main/sub | Ключей: 20
+https://raw.githubusercontent.com/mahdibland/V2RayAggregator/master/sub/sub_merge.txt | Ключей: 4186
+https://raw.githubusercontent.com/roosterkid/openproxylist/main/V2RAY_RAW.txt | Ключей: 147
