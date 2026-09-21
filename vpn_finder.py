@@ -1,4 +1,5 @@
 ﻿import argparse
+import base64
 import io
 import os
 import re
@@ -30,6 +31,7 @@ from vpn_utils import (
 VALID_SUBS_FILE = "valid_subscriptions.txt"
 HISTORY_SUBS_FILE = "history_subs.txt"
 OUTPUT_KEYS_FILE = "working_keys.txt"
+OUTPUT_SUB_FILE = "sub.txt"
 
 CURATED_SOURCES = [
     "https://raw.githubusercontent.com/mahdibland/V2RayAggregator/master/sub/sub_merge.txt",
@@ -188,9 +190,7 @@ def discover_and_update_subscriptions(max_workers: int = 30) -> tuple[list[str],
 
 def safe_save_working_keys(new_working_keys: list[str], backup: bool = True):
     """
-    Безопасное объединение и сохранение ключей:
-    Свежие проверенные быстрые ключи сохраняются в начале файла,
-    существующие ключи не теряются.
+    Безопасное сохранение working_keys.txt и sub.txt (Base64 формат).
     """
     if backup and os.path.exists(OUTPUT_KEYS_FILE) and os.path.getsize(OUTPUT_KEYS_FILE) > 0:
         try:
@@ -202,18 +202,17 @@ def safe_save_working_keys(new_working_keys: list[str], backup: bool = True):
     combined = []
     seen = set()
 
-    # Сначала новые рабочие
     for k in new_working_keys:
         if k not in seen:
             seen.add(k)
             combined.append(k)
 
-    # Затем старые (если уникальны)
     for k in existing_keys:
         if k not in seen:
             seen.add(k)
             combined.append(k)
 
+    # 1. Сохраняем текстовый список working_keys.txt
     tmp_file = f"{OUTPUT_KEYS_FILE}.tmp"
     with open(tmp_file, "w", encoding="utf-8") as f:
         for k in combined:
@@ -222,7 +221,14 @@ def safe_save_working_keys(new_working_keys: list[str], backup: bool = True):
     if os.path.exists(OUTPUT_KEYS_FILE):
         os.remove(OUTPUT_KEYS_FILE)
     os.rename(tmp_file, OUTPUT_KEYS_FILE)
-    print(f"[OK] Сохранено {len(combined)} уникальных ключей в {OUTPUT_KEYS_FILE} ({len(new_working_keys)} свежих быстрых в начале)")
+
+    # 2. Сохраняем Base64 подписку для Throne / V2Ray / Hiddify
+    raw_sub = "\n".join(combined)
+    b64_encoded = base64.b64encode(raw_sub.encode("utf-8")).decode("ascii")
+    with open(OUTPUT_SUB_FILE, "w", encoding="utf-8") as f:
+        f.write(b64_encoded)
+
+    print(f"[OK] Сохранено {len(combined)} ключей в {OUTPUT_KEYS_FILE} и Base64 подписку в {OUTPUT_SUB_FILE}")
 
 
 def main():
@@ -265,7 +271,6 @@ def main():
         print("[!] Нет ключей для проверки.")
         return
 
-    # Ограничиваем объем проверки за один запуск CI, если задан лимит
     keys_to_ping = unique_keys[:args.limit_check] if args.limit_check > 0 else unique_keys
     print(f"[*] Начинаем проверку {len(keys_to_ping)} ключей...")
 
