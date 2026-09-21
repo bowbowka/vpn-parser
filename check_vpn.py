@@ -5,7 +5,6 @@ import sys
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-# Безопасная настройка UTF-8 для консоли Windows / CI
 if sys.platform == "win32":
     try:
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -13,7 +12,9 @@ if sys.platform == "win32":
     except Exception:
         pass
 
+from vpn_finder import safe_save_verified_keys
 from vpn_utils import (
+    clean_key,
     fetch_all_subs_parallel,
     fetch_keys_from_sub,
     parse_key_details,
@@ -47,46 +48,51 @@ def main():
         all_keys.extend(keys)
 
     fetch_time = round(time.perf_counter() - start_fetch, 1)
-    unique_keys = list(set(all_keys))
+
+    unique_keys = []
+    seen = set()
+    for k in all_keys:
+        ck = clean_key(k)
+        if ck and ck not in seen:
+            seen.add(ck)
+            unique_keys.append(ck)
+
     print(f"[*] Собрано уникальных ключей: {len(unique_keys)} (за {fetch_time} сек)")
+    if not unique_keys:
+        print("[!] Нет ключей для проверки.")
+        return
+
     print(f"[*] Начинаем пинг (порог: < {MAX_PING_MS} мс, потоков: {MAX_THREADS})...")
     print(f"[*] Результаты сохраняются в: {OUTPUT_KEYS_FILE}\n" + "=" * 65)
 
-    if os.path.exists(OUTPUT_KEYS_FILE) and os.path.getsize(OUTPUT_KEYS_FILE) > 0:
-        try:
-            shutil.copyfile(OUTPUT_KEYS_FILE, f"{OUTPUT_KEYS_FILE}.bak")
-        except Exception:
-            pass
+    working_keys = []
+    with ThreadPoolExecutor(max_workers=MAX_THREADS) as executor:
+        futures = {executor.submit(ping_key, key): key for key in unique_keys}
 
-    fast_count = 0
-    tmp_output = f"{OUTPUT_KEYS_FILE}.tmp"
+        for i, future in enumerate(as_completed(futures), 1):
+            key, latency = future.result()
+            if latency is not None and latency < MAX_PING_MS:
+                working_keys.append((latency, key))
+                print(f"[{i}/{len(unique_keys)}] [OK] {latency} мс | {key[:60]}...")
+            elif latency is not None:
+                if i % 50 == 0:
+                    print(f"[{i}/{len(unique_keys)}] [SLOW] {latency} мс")
+            else:
+                if i % 100 == 0:
+                    print(f"[{i}/{len(unique_keys)}] ...")
 
-    with open(tmp_output, "w", encoding="utf-8") as out_file:
-        with ThreadPoolExecutor(max_workers=MAX_THREADS) as executor:
-            futures = {executor.submit(ping_key, key): key for key in unique_keys}
-
-            for i, future in enumerate(as_completed(futures), 1):
-                key, latency = future.result()
-                if latency is not None and latency < MAX_PING_MS:
-                    fast_count += 1
-                    out_file.write(f"{key}\n")
-                    out_file.flush()
-                    print(f"[{i}/{len(unique_keys)}] [OK] {latency} мс | {key[:60]}...")
-                elif latency is not None:
-                    if i % 50 == 0:
-                        print(f"[{i}/{len(unique_keys)}] [SLOW] {latency} мс")
-                else:
-                    if i % 100 == 0:
-                        print(f"[{i}/{len(unique_keys)}] ...")
-
-    if os.path.exists(OUTPUT_KEYS_FILE):
-        os.remove(OUTPUT_KEYS_FILE)
-    os.rename(tmp_output, OUTPUT_KEYS_FILE)
+    working_keys.sort(key=lambda x: x[0])
+    verified_keys = [k for _, k in working_keys]
 
     print("=" * 65)
     print("[*] ИТОГИ ПРОВЕРКИ:")
     print(f"Всего ключей проверено: {len(unique_keys)}")
-    print(f"Сохранено рабочих: {fast_count}")
+    print(f"Сохранено рабочих: {len(verified_keys)}")
+
+    if verified_keys:
+        safe_save_verified_keys(verified_keys)
+    else:
+        print("[!] Внимание: ни один ключ не ответил быстрее порога, файлы не были затерты.")
 
 
 if __name__ == "__main__":

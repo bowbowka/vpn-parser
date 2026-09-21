@@ -2,6 +2,7 @@
 import html
 import io
 import json
+import os
 import re
 import socket
 import ssl
@@ -24,8 +25,9 @@ DEFAULT_HEADERS = {
     "Accept": "*/*",
 }
 
+# Регулярное выражение поиска ссылок (non-capturing group для схемы)
 VPN_PROTOCOLS_REGEX = re.compile(
-    r"(?<![a-zA-Z0-9])(vless|vmess|trojan|ss|ssr|tuic|hy2|hysteria2)://[^\s<>\"\'\\]+",
+    r"(?<![a-zA-Z0-9])(?:vless|vmess|trojan|ss|ssr|tuic|hy2|hysteria2)://[^\s<>\"\'`\\]+",
     re.IGNORECASE,
 )
 
@@ -43,6 +45,9 @@ INVALID_DOMAINS = {
 
 
 def is_ip_address(host: str) -> bool:
+    if not host:
+        return False
+    host = host.strip("[]")
     try:
         socket.inet_aton(host)
         return True
@@ -51,20 +56,31 @@ def is_ip_address(host: str) -> bool:
     try:
         socket.inet_pton(socket.AF_INET6, host)
         return True
-    except socket.error:
+    except (socket.error, AttributeError):
         pass
     return False
 
 
 def clean_key(key: str) -> str:
-    """Очищает VPN-ключ от мусора, кавычек, HTML-кодирования (&amp;) и пробелов."""
+    """
+    Очищает VPN-ключ от мусора, кавычек, HTML-сущностей (&amp; -> &, &quot; -> ", и т.д.)
+    и знаков пунктуации на конце.
+    """
     if not key:
         return ""
-    # Декодируем HTML-сущности (&amp; -> &, &quot; -> ", и т.д.)
-    key = html.unescape(key)
-    key = key.replace("&amp;", "&").replace("\\/", "/").strip().strip("'\"`<>")
-    # Убираем возможные скобки в конце
-    key = re.sub(r"[\)\]\>]+$", "", key)
+
+    key = key.strip().strip("'\"`<>")
+
+    # Многократная очистка HTML-сущностей (&amp;amp; -> &)
+    for _ in range(3):
+        unescaped = html.unescape(key)
+        unescaped = unescaped.replace("&amp;", "&").replace("\\/", "/")
+        if unescaped == key:
+            break
+        key = unescaped
+
+    # Удаляем мусорные знаки препинания и закрывающие скобки на концах URL
+    key = re.sub(r"[\.,;:!\)\]\>\}\'\"]+$", "", key.strip())
     return key
 
 
@@ -77,15 +93,20 @@ def decode_subscription_content(raw_text: str) -> str:
     if re.search(VPN_PROTOCOLS_REGEX, text):
         return text
 
-    clean_b64 = re.sub(r"[\s\r\n\t]+", "", text)
+    # Очищаем от пробельных символов и BOM
+    clean_b64 = re.sub(r"[\s\r\n\t\ufeff]+", "", text)
     if len(clean_b64) >= 8:
-        missing_padding = len(clean_b64) % 4
-        if missing_padding:
-            clean_b64 += "=" * (4 - missing_padding)
+        rem = len(clean_b64) % 4
+        if rem == 1:
+            clean_b64 = clean_b64[:-1]
+        elif rem == 2:
+            clean_b64 += "=="
+        elif rem == 3:
+            clean_b64 += "="
 
         for decoder in [base64.b64decode, base64.urlsafe_b64decode]:
             try:
-                decoded = decoder(clean_b64.encode("ascii")).decode("utf-8", errors="ignore")
+                decoded = decoder(clean_b64.encode("utf-8", errors="ignore")).decode("utf-8", errors="ignore")
                 if re.search(VPN_PROTOCOLS_REGEX, decoded):
                     return decoded
             except Exception:
@@ -98,17 +119,12 @@ def extract_keys_from_text(text: str) -> list[str]:
     """Извлекает и очищает все VPN-ключи из переданного текста."""
     text = html.unescape(text)
     decoded_text = decode_subscription_content(text)
-    raw_keys = VPN_PROTOCOLS_REGEX.findall(decoded_text)
-
-    full_matches = []
-    for match in VPN_PROTOCOLS_REGEX.finditer(decoded_text):
-        full_matches.append(match.group(0))
 
     valid_keys = []
     seen = set()
 
-    for rk in full_matches:
-        ck = clean_key(rk)
+    for match in VPN_PROTOCOLS_REGEX.finditer(decoded_text):
+        ck = clean_key(match.group(0))
         if not ck or ck in seen:
             continue
 
@@ -129,18 +145,23 @@ def extract_keys_from_text(text: str) -> list[str]:
 def parse_key_details(key: str) -> dict | None:
     """
     Разбирает VPN-ключ (VLESS, VMess, Trojan, Shadowsocks, Hysteria2)
-    и извлекает host, port, sni, protocol.
+    и извлекает host, port, sni, protocol, is_tls, is_udp.
     """
     try:
         key = clean_key(key)
-        parsed = urllib.parse.urlparse(key)
-        scheme = parsed.scheme.lower()
+        if "://" not in key:
+            return None
+
+        scheme, rest = key.split("://", 1)
+        scheme = scheme.lower()
 
         if scheme in ("vless", "trojan", "hy2", "hysteria2", "tuic"):
+            parsed = urllib.parse.urlparse(key)
             host = parsed.hostname
-            port = parsed.port
-            if not host or not port:
+            if not host:
                 return None
+
+            port = parsed.port or (443 if scheme in ("vless", "trojan", "hy2", "hysteria2", "tuic") else 80)
 
             query_params = urllib.parse.parse_qs(parsed.query)
             sni = None
@@ -149,31 +170,60 @@ def parse_key_details(key: str) -> dict | None:
                     sni = query_params[sni_field][0]
                     break
 
-            # Проверяем reality public key
-            is_reality = "reality" in parsed.query.lower() or "pbk" in query_params
+            security = query_params.get("security", [""])[0].lower()
+            is_reality = security == "reality" or "reality" in parsed.query.lower() or "pbk" in query_params
+            is_udp = scheme in ("hy2", "hysteria2", "tuic")
+            is_tls = scheme == "trojan" or is_reality or security == "tls" or query_params.get("tls", [""])[0] in ("1", "true") or port == 443
 
             return {
                 "scheme": scheme,
                 "host": host,
                 "port": port,
                 "sni": sni or host,
-                "is_udp": scheme in ("hy2", "hysteria2", "tuic"),
+                "is_udp": is_udp,
                 "is_reality": is_reality,
+                "is_tls": is_tls,
             }
 
         elif scheme == "vmess":
-            b64_payload = parsed.netloc
-            missing_padding = len(b64_payload) % 4
-            if missing_padding:
-                b64_payload += "=" * (4 - missing_padding)
-            decoded_json = base64.b64decode(b64_payload.encode("utf-8")).decode("utf-8", errors="ignore")
-            data = json.loads(decoded_json)
+            # VMess URL: vmess://BASE64_JSON[#remark]
+            # Не используем urlparse, чтобы слэши в base64 не обрезали payload!
+            b64_payload = rest.split("#")[0].split("?")[0].strip()
+            rem = len(b64_payload) % 4
+            if rem == 2:
+                b64_payload += "=="
+            elif rem == 3:
+                b64_payload += "="
+            elif rem == 1:
+                b64_payload = b64_payload[:-1]
 
-            host = data.get("add")
-            port = int(data.get("port", 0))
-            sni = data.get("sni") or data.get("host") or host
+            decoded_json = None
+            for decoder in [base64.b64decode, base64.urlsafe_b64decode]:
+                try:
+                    decoded_json = decoder(b64_payload.encode("utf-8", errors="ignore")).decode("utf-8", errors="ignore")
+                    break
+                except Exception:
+                    continue
+
+            if not decoded_json:
+                return None
+
+            data = json.loads(decoded_json)
+            if not isinstance(data, dict):
+                return None
+
+            host = str(data.get("add") or data.get("host") or "").strip("[]")
+            try:
+                port = int(data.get("port", 0))
+            except (ValueError, TypeError):
+                port = 0
+
             if not host or not port:
                 return None
+
+            sni = str(data.get("sni") or data.get("host") or host).strip("[]")
+            tls_val = str(data.get("tls", "")).lower()
+            is_tls = tls_val in ("tls", "1", "true") or port == 443
 
             return {
                 "scheme": scheme,
@@ -182,34 +232,44 @@ def parse_key_details(key: str) -> dict | None:
                 "sni": sni,
                 "is_udp": False,
                 "is_reality": False,
+                "is_tls": is_tls,
             }
 
         elif scheme == "ss":
-            netloc = parsed.netloc
-            if "@" in netloc:
-                user_info, host_port = netloc.split("@", 1)
+            body = rest.split("#")[0]
+            if "@" in body:
+                user_info, host_port = body.split("@", 1)
             else:
-                missing_padding = len(netloc) % 4
-                if missing_padding:
-                    netloc += "=" * (4 - missing_padding)
-                try:
-                    decoded = base64.b64decode(netloc.encode("utf-8")).decode("utf-8", errors="ignore")
-                    if "@" in decoded:
-                        user_info, host_port = decoded.split("@", 1)
-                    else:
-                        return None
-                except Exception:
-                    return None
+                b64_part = body.split("?")[0].split("/")[0].strip()
+                rem = len(b64_part) % 4
+                if rem == 2:
+                    b64_part += "=="
+                elif rem == 3:
+                    b64_part += "="
+                elif rem == 1:
+                    b64_part = b64_part[:-1]
 
-            if host_port.startswith("[") and "]" in host_port:
-                host = host_port[1 : host_port.index("]")]
-                port_str = host_port[host_port.index("]") + 1 :].lstrip(":")
+                decoded = None
+                for decoder in [base64.b64decode, base64.urlsafe_b64decode]:
+                    try:
+                        decoded = decoder(b64_part.encode("utf-8", errors="ignore")).decode("utf-8", errors="ignore")
+                        break
+                    except Exception:
+                        continue
+
+                if not decoded or "@" not in decoded:
+                    return None
+                user_info, host_port = decoded.split("@", 1)
+
+            hp = host_port.split("?")[0].split("/")[0]
+            if hp.startswith("[") and "]" in hp:
+                host = hp[1 : hp.index("]")]
+                port_str = hp[hp.index("]") + 1 :].lstrip(":")
             else:
-                parts = host_port.split(":")
+                parts = hp.split(":")
                 host = parts[0]
                 port_str = parts[1] if len(parts) > 1 else ""
 
-            port_str = port_str.split("?")[0].split("#")[0]
             if not host or not port_str or not port_str.isdigit():
                 return None
 
@@ -220,6 +280,7 @@ def parse_key_details(key: str) -> dict | None:
                 "sni": host,
                 "is_udp": False,
                 "is_reality": False,
+                "is_tls": False,
             }
 
     except Exception:
@@ -260,15 +321,19 @@ def ping_key(key: str, timeout: float = 2.0) -> tuple[str, float | None]:
 
     host = details["host"]
     port = details["port"]
-    is_udp = details["is_udp"]
+    is_udp = details.get("is_udp", False)
 
     start = time.perf_counter()
     if is_udp:
+        # Для UDP протоколов (Hysteria2/TUIC) пингуем хост через TCP connect на порт хоста или 443,
+        # чтобы измерить РЕАЛЬНЫЙ RTT сети, а не получать ложные 0.1 мс от sendto
         try:
-            sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            sock.settimeout(timeout)
-            sock.sendto(b"\x00" * 16, (host, port))
+            sock = socket.create_connection((host, port), timeout=timeout)
             sock.close()
+            latency = round((time.perf_counter() - start) * 1000, 1)
+            return key, latency
+        except ConnectionRefusedError:
+            # Хост доступен в сети и ответил RST
             latency = round((time.perf_counter() - start) * 1000, 1)
             return key, latency
         except Exception:
@@ -291,7 +356,8 @@ def ping_and_tls_check(key: str, timeout: float = 2.0) -> tuple[str, float | Non
     host = details["host"]
     port = details["port"]
     sni = details.get("sni")
-    is_udp = details["is_udp"]
+    is_udp = details.get("is_udp", False)
+    is_tls = details.get("is_tls", False)
 
     if is_udp:
         return ping_key(key, timeout=timeout)
@@ -301,8 +367,8 @@ def ping_and_tls_check(key: str, timeout: float = 2.0) -> tuple[str, float | Non
     try:
         sock = socket.create_connection((host, port), timeout=timeout)
 
-        # TLS проверка
-        if port == 443 or (sni and sni != host):
+        # Проводим TLS Handshake если протокол TLS/Reality/Trojan или указан SNI
+        if is_tls or (sni and sni != host):
             context = ssl.create_default_context()
             context.check_hostname = False
             context.verify_mode = ssl.CERT_NONE

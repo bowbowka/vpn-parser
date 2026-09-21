@@ -12,7 +12,9 @@ if sys.platform == "win32":
     except Exception:
         pass
 
+from vpn_finder import safe_save_verified_keys
 from vpn_utils import (
+    clean_key,
     fetch_all_subs_parallel,
     fetch_keys_from_sub,
     parse_key_details,
@@ -46,46 +48,51 @@ def main():
         all_keys.extend(keys)
 
     fetch_time = round(time.perf_counter() - start_fetch, 1)
-    unique_keys = list(set(all_keys))
+
+    unique_keys = []
+    seen = set()
+    for k in all_keys:
+        ck = clean_key(k)
+        if ck and ck not in seen:
+            seen.add(ck)
+            unique_keys.append(ck)
+
     print(f"[*] Найдено уникальных ключей: {len(unique_keys)} (за {fetch_time} сек)")
+    if not unique_keys:
+        print("[!] Нет ключей для проверки.")
+        return
+
     print(f"[*] Запуск TLS Handshake + SNI проверки (порог: < {MAX_PING_MS} мс)...")
     print(f"[*] Результаты будут сохранены в: {OUTPUT_KEYS_FILE}\n" + "=" * 65)
 
-    if os.path.exists(OUTPUT_KEYS_FILE) and os.path.getsize(OUTPUT_KEYS_FILE) > 0:
-        try:
-            shutil.copyfile(OUTPUT_KEYS_FILE, f"{OUTPUT_KEYS_FILE}.bak")
-        except Exception:
-            pass
+    working_keys = []
+    with ThreadPoolExecutor(max_workers=MAX_THREADS) as executor:
+        futures = {executor.submit(ping_and_tls_check, key): key for key in unique_keys}
 
-    valid_count = 0
-    tmp_output = f"{OUTPUT_KEYS_FILE}.tmp"
+        for i, future in enumerate(as_completed(futures), 1):
+            key, latency = future.result()
+            if latency is not None and latency < MAX_PING_MS:
+                working_keys.append((latency, key))
+                print(f"[{i}/{len(unique_keys)}] [TLS OK] {latency} мс | {key[:55]}...")
+            elif latency is not None:
+                if i % 50 == 0:
+                    print(f"[{i}/{len(unique_keys)}] [SLOW] Медленный TLS ({latency} мс)")
+            else:
+                if i % 100 == 0:
+                    print(f"[{i}/{len(unique_keys)}] ...")
 
-    with open(tmp_output, "w", encoding="utf-8") as out_file:
-        with ThreadPoolExecutor(max_workers=MAX_THREADS) as executor:
-            futures = {executor.submit(ping_and_tls_check, key): key for key in unique_keys}
-
-            for i, future in enumerate(as_completed(futures), 1):
-                key, latency = future.result()
-                if latency is not None and latency < MAX_PING_MS:
-                    valid_count += 1
-                    out_file.write(f"{key}\n")
-                    out_file.flush()
-                    print(f"[{i}/{len(unique_keys)}] [TLS OK] {latency} мс | {key[:55]}...")
-                elif latency is not None:
-                    if i % 50 == 0:
-                        print(f"[{i}/{len(unique_keys)}] [SLOW] Медленный TLS ({latency} мс)")
-                else:
-                    if i % 100 == 0:
-                        print(f"[{i}/{len(unique_keys)}] ...")
-
-    if os.path.exists(OUTPUT_KEYS_FILE):
-        os.remove(OUTPUT_KEYS_FILE)
-    os.rename(tmp_output, OUTPUT_KEYS_FILE)
+    working_keys.sort(key=lambda x: x[0])
+    verified_keys = [k for _, k in working_keys]
 
     print("=" * 65)
     print("[*] ИТОГИ:")
     print(f"Всего ключей: {len(unique_keys)}")
-    print(f"Прошли TLS Handshake и записаны: {valid_count}")
+    print(f"Прошли TLS Handshake и записаны: {len(verified_keys)}")
+
+    if verified_keys:
+        safe_save_verified_keys(verified_keys)
+    else:
+        print("[!] Внимание: ни один ключ не прошел проверку, файлы не были затерты.")
 
 
 if __name__ == "__main__":

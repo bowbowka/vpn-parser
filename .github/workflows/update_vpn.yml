@@ -35,6 +35,8 @@ jobs:
           pip install -r requirements.txt
 
       - name: Discover new VPNs and collect verified keys
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           python vpn_finder.py --max-ping 120 --threads 35 --limit-check 800
 
@@ -42,9 +44,9 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          
+
           git add valid_subscriptions.txt history_subs.txt working_keys.txt sub.txt
-          
+
           if git diff --staged --quiet; then
             echo "No changes detected, skipping commit."
           else

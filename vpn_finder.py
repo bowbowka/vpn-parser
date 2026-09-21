@@ -20,6 +20,7 @@ import requests
 from vpn_utils import (
     DEFAULT_HEADERS,
     VPN_PROTOCOLS_REGEX,
+    clean_key,
     extract_keys_from_text,
     fetch_all_subs_parallel,
     fetch_keys_from_sub,
@@ -115,6 +116,9 @@ def search_github_subscriptions(timeout: float = 8.0) -> list[str]:
         "vless configs reality subscription in:path",
     ]
     headers = {"User-Agent": "Mozilla/5.0", "Accept": "application/vnd.github.v3+json"}
+    token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
 
     for q in queries:
         try:
@@ -150,12 +154,16 @@ def discover_and_update_subscriptions(max_workers: int = 30) -> tuple[list[str],
         tg_futures = {executor.submit(scrape_telegram_channel, ch): ch for ch in TELEGRAM_CHANNELS}
         for fut in as_completed(tg_futures):
             ch = tg_futures[fut]
-            keys = fut.result()
-            if keys:
-                print(f"    [TG] @{ch}: найдено {len(keys)} ключей")
-                direct_keys.extend(keys)
+            try:
+                keys = fut.result()
+                if keys:
+                    print(f"    [TG] @{ch}: найдено {len(keys)} ключей")
+                    direct_keys.extend(keys)
+            except Exception:
+                pass
 
-    urls_to_check = [u for u in candidate_urls if u not in valid_urls]
+    # Исключаем уже проверенные и известные адреса (как валидные, так и мертвые из истории)
+    urls_to_check = [u for u in candidate_urls if u not in valid_urls and u not in history_urls]
     print(f"[*] Проверка {len(urls_to_check)} новых потенциальных подписок...")
 
     new_valid = []
@@ -201,31 +209,44 @@ def safe_save_verified_keys(verified_keys: list[str]):
         print("[!] Нет проверенных ключей для сохранения.")
         return
 
+    cleaned_keys = []
+    seen = set()
+    for k in verified_keys:
+        ck = clean_key(k)
+        if ck and ck not in seen:
+            seen.add(ck)
+            cleaned_keys.append(ck)
+
+    if not cleaned_keys:
+        print("[!] После очистки не осталось ключей для сохранения.")
+        return
+
+    # Резервная копия перед перезаписью
+    if os.path.exists(OUTPUT_KEYS_FILE) and os.path.getsize(OUTPUT_KEYS_FILE) > 0:
+        try:
+            shutil.copyfile(OUTPUT_KEYS_FILE, f"{OUTPUT_KEYS_FILE}.bak")
+        except Exception:
+            pass
+
     # 1. working_keys.txt (чистые проверенные ключи)
     tmp_file = f"{OUTPUT_KEYS_FILE}.tmp"
     with open(tmp_file, "w", encoding="utf-8") as f:
-        for k in verified_keys:
+        for k in cleaned_keys:
             f.write(f"{k}\n")
-
-    if os.path.exists(OUTPUT_KEYS_FILE):
-        os.remove(OUTPUT_KEYS_FILE)
-    os.rename(tmp_file, OUTPUT_KEYS_FILE)
+    os.replace(tmp_file, OUTPUT_KEYS_FILE)
 
     # 2. sub.txt (топ самых быстрых серверов в Base64 для Throne)
-    top_servers = verified_keys[:MAX_SUB_SERVERS]
+    top_servers = cleaned_keys[:MAX_SUB_SERVERS]
     raw_sub = "\n".join(top_servers)
     b64_encoded = base64.b64encode(raw_sub.encode("utf-8")).decode("ascii")
 
     tmp_sub = f"{OUTPUT_SUB_FILE}.tmp"
     with open(tmp_sub, "w", encoding="utf-8") as f:
         f.write(b64_encoded)
-
-    if os.path.exists(OUTPUT_SUB_FILE):
-        os.remove(OUTPUT_SUB_FILE)
-    os.rename(tmp_sub, OUTPUT_SUB_FILE)
+    os.replace(tmp_sub, OUTPUT_SUB_FILE)
 
     print(f"[OK] sub.txt обновлен: {len(top_servers)} ТОП проверенных серверов (Base64)")
-    print(f"[OK] working_keys.txt обновлен: {len(verified_keys)} серверов")
+    print(f"[OK] working_keys.txt обновлен: {len(cleaned_keys)} серверов")
 
 
 def main():
@@ -263,7 +284,16 @@ def main():
         collected_keys.extend(keys)
 
     fetch_time = round(time.perf_counter() - start_fetch, 1)
-    unique_keys = list(dict.fromkeys(collected_keys))
+
+    # Очищаем и дедуплицируем собранные ключи
+    unique_keys = []
+    seen_raw = set()
+    for k in collected_keys:
+        ck = clean_key(k)
+        if ck and ck not in seen_raw:
+            seen_raw.add(ck)
+            unique_keys.append(ck)
+
     print(f"[*] Собрано {len(unique_keys)} уникальных свежих ключей (за {fetch_time} сек).")
 
     if not unique_keys:
@@ -311,7 +341,7 @@ def main():
     verified_fast_keys = [k for _, k in working_keys]
 
     print("=" * 65)
-    print(f"[*] ИТОГИ ПРОВЕРКИ:")
+    print("[*] ИТОГИ ПРОВЕРКИ:")
     print(f"Проверено: {len(keys_to_ping)} ключей")
     print(f"РЕАЛЬНО РАБОЧИХ с пингом < {args.max_ping} мс: {len(verified_fast_keys)}")
 
