@@ -16,7 +16,7 @@ permissions:
 jobs:
   update-vpn:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 30
 
     steps:
       - name: Checkout repository
@@ -34,9 +34,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Discover new VPNs and collect keys
+      - name: Discover new VPNs and collect verified keys
         run: |
-          python vpn_finder.py --max-ping 200 --threads 40 --limit-check 1500
+          python vpn_finder.py --max-ping 120 --threads 35 --limit-check 800
 
       - name: Commit and push changes
         run: |
@@ -48,6 +48,6 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes detected, skipping commit."
           else
-            git commit -m "Auto-update VPN keys and sub.txt [skip ci]"
+            git commit -m "Auto-update verified working keys and sub.txt [skip ci]"
             git push origin main
           fi

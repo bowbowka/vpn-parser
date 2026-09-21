@@ -33,6 +33,9 @@ HISTORY_SUBS_FILE = "history_subs.txt"
 OUTPUT_KEYS_FILE = "working_keys.txt"
 OUTPUT_SUB_FILE = "sub.txt"
 
+# Максимальное количество серверов в файле подписки Throne (чтобы клиент не зависал)
+MAX_SUB_SERVERS = 100
+
 CURATED_SOURCES = [
     "https://raw.githubusercontent.com/mahdibland/V2RayAggregator/master/sub/sub_merge.txt",
     "https://raw.githubusercontent.com/itsyebekhe/PSG/main/subscriptions/xray/mix",
@@ -188,47 +191,41 @@ def discover_and_update_subscriptions(max_workers: int = 30) -> tuple[list[str],
     return [u for u, _ in new_valid], collected_keys
 
 
-def safe_save_working_keys(new_working_keys: list[str], backup: bool = True):
+def safe_save_verified_keys(verified_keys: list[str]):
     """
-    Безопасное сохранение working_keys.txt и sub.txt (Base64 формат).
+    Сохраняет ИСКЛЮЧИТЕЛЬНО проверенные живые ключи:
+    - sub.txt: топ проверенных серверов в Base64 для Throne
+    - working_keys.txt: чистый текстовый список проверенных серверов
     """
-    if backup and os.path.exists(OUTPUT_KEYS_FILE) and os.path.getsize(OUTPUT_KEYS_FILE) > 0:
-        try:
-            shutil.copyfile(OUTPUT_KEYS_FILE, f"{OUTPUT_KEYS_FILE}.bak")
-        except Exception:
-            pass
+    if not verified_keys:
+        print("[!] Нет проверенных ключей для сохранения.")
+        return
 
-    existing_keys = load_lines(OUTPUT_KEYS_FILE)
-    combined = []
-    seen = set()
-
-    for k in new_working_keys:
-        if k not in seen:
-            seen.add(k)
-            combined.append(k)
-
-    for k in existing_keys:
-        if k not in seen:
-            seen.add(k)
-            combined.append(k)
-
-    # 1. Сохраняем текстовый список working_keys.txt
+    # 1. working_keys.txt (чистые проверенные ключи)
     tmp_file = f"{OUTPUT_KEYS_FILE}.tmp"
     with open(tmp_file, "w", encoding="utf-8") as f:
-        for k in combined:
+        for k in verified_keys:
             f.write(f"{k}\n")
 
     if os.path.exists(OUTPUT_KEYS_FILE):
         os.remove(OUTPUT_KEYS_FILE)
     os.rename(tmp_file, OUTPUT_KEYS_FILE)
 
-    # 2. Сохраняем Base64 подписку для Throne / V2Ray / Hiddify
-    raw_sub = "\n".join(combined)
+    # 2. sub.txt (топ самых быстрых серверов в Base64 для Throne)
+    top_servers = verified_keys[:MAX_SUB_SERVERS]
+    raw_sub = "\n".join(top_servers)
     b64_encoded = base64.b64encode(raw_sub.encode("utf-8")).decode("ascii")
-    with open(OUTPUT_SUB_FILE, "w", encoding="utf-8") as f:
+
+    tmp_sub = f"{OUTPUT_SUB_FILE}.tmp"
+    with open(tmp_sub, "w", encoding="utf-8") as f:
         f.write(b64_encoded)
 
-    print(f"[OK] Сохранено {len(combined)} ключей в {OUTPUT_KEYS_FILE} и Base64 подписку в {OUTPUT_SUB_FILE}")
+    if os.path.exists(OUTPUT_SUB_FILE):
+        os.remove(OUTPUT_SUB_FILE)
+    os.rename(tmp_sub, OUTPUT_SUB_FILE)
+
+    print(f"[OK] sub.txt обновлен: {len(top_servers)} ТОП проверенных серверов (Base64)")
+    print(f"[OK] working_keys.txt обновлен: {len(verified_keys)} серверов")
 
 
 def main():
@@ -237,13 +234,14 @@ def main():
     parser.add_argument("--check-only", action="store_true", help="Только проверить существующие подписки")
     parser.add_argument("--tls", action="store_true", default=True, help="Глубокая TLS проверка")
     parser.add_argument("--no-tls", dest="tls", action="store_false", help="Только быстрый TCP пинг")
-    parser.add_argument("--max-ping", type=int, default=150, help="Максимально допустимый пинг в мс")
-    parser.add_argument("--threads", type=int, default=30, help="Число параллельных потоков")
-    parser.add_argument("--limit-check", type=int, default=1500, help="Максимум ключей для проверки за один прогон")
+    parser.add_argument("--max-ping", type=int, default=120, help="Максимально допустимый пинг в мс (по умолчанию: 120)")
+    parser.add_argument("--threads", type=int, default=35, help="Число параллельных потоков")
+    parser.add_argument("--limit-check", type=int, default=1000, help="Максимум ключей для проверки за один прогон")
     args = parser.parse_args()
 
     collected_keys = []
 
+    # 1. Собираем самые свежие ключи из Telegram и новых подписок
     if not args.check_only:
         _, keys_from_finder = discover_and_update_subscriptions(max_workers=args.threads)
         collected_keys.extend(keys_from_finder)
@@ -252,12 +250,13 @@ def main():
         print("[OK] Режим --find-only завершен.")
         return
 
-    print(f"\n[*] Загрузка существующих подписок из {VALID_SUBS_FILE}...")
+    # 2. Загрузка существующих подписок
+    print(f"\n[*] Загрузка подписок из {VALID_SUBS_FILE}...")
     valid_lines = load_lines(VALID_SUBS_FILE)
     urls = [line.split("|")[0].strip() for line in valid_lines if line.split("|")[0].strip().startswith("http")]
     urls = list(dict.fromkeys(urls))
 
-    print(f"[*] Параллельный опрос {len(urls)} подписок ({args.threads} потоков)...")
+    print(f"[*] Быстрый параллельный опрос {len(urls)} подписок...")
     start_fetch = time.perf_counter()
     sub_results = fetch_all_subs_parallel(urls, max_workers=args.threads, timeout=8.0)
     for u, keys in sub_results.items():
@@ -271,21 +270,35 @@ def main():
         print("[!] Нет ключей для проверки.")
         return
 
+    # Приоритет: сначала VLESS Reality, Trojan, Hysteria2 (они лучше всего работают в РФ)
+    def key_priority(k: str) -> int:
+        k_lower = k.lower()
+        if "reality" in k_lower:
+            return 0
+        if k_lower.startswith("vless://"):
+            return 1
+        if k_lower.startswith("trojan://"):
+            return 2
+        if k_lower.startswith("hy2://") or k_lower.startswith("hysteria2://"):
+            return 3
+        return 4
+
+    unique_keys.sort(key=key_priority)
+
     keys_to_ping = unique_keys[:args.limit_check] if args.limit_check > 0 else unique_keys
-    print(f"[*] Начинаем проверку {len(keys_to_ping)} ключей...")
+    print(f"[*] Начинаем жесткую фильтрацию {len(keys_to_ping)} ключей (порог < {args.max_ping} мс)...")
 
     check_fn = ping_and_tls_check if args.tls else ping_key
     check_name = "TLS Handshake" if args.tls else "TCP Ping"
-    print(f"[*] Запуск проверки {check_name} (порог: < {args.max_ping} мс, потоков: {args.threads})...\n" + "=" * 65)
 
     working_keys = []
     with ThreadPoolExecutor(max_workers=args.threads) as executor:
-        futures = {executor.submit(check_fn, key): key for key in keys_to_ping}
+        futures = {executor.submit(check_fn, key, 2.0): key for key in keys_to_ping}
         for i, future in enumerate(as_completed(futures), 1):
             key, latency = future.result()
             if latency is not None and latency < args.max_ping:
                 working_keys.append((latency, key))
-                print(f"[{i}/{len(keys_to_ping)}] [OK] {latency} мс | {key[:60]}...")
+                print(f"[{i}/{len(keys_to_ping)}] [OK] {latency} мс | {key[:55]}...")
             elif latency is not None:
                 if i % 50 == 0:
                     print(f"[{i}/{len(keys_to_ping)}] [SLOW] {latency} мс")
@@ -293,16 +306,17 @@ def main():
                 if i % 100 == 0:
                     print(f"[{i}/{len(keys_to_ping)}] ...")
 
+    # Сортируем от самых быстрых (минимальный пинг) к более медленным
     working_keys.sort(key=lambda x: x[0])
-    fast_keys = [k for _, k in working_keys]
+    verified_fast_keys = [k for _, k in working_keys]
 
     print("=" * 65)
-    print(f"[*] ИТОГИ:")
-    print(f"Проверено ключей: {len(keys_to_ping)}")
-    print(f"Рабочих с пингом < {args.max_ping} мс: {len(fast_keys)}")
+    print(f"[*] ИТОГИ ПРОВЕРКИ:")
+    print(f"Проверено: {len(keys_to_ping)} ключей")
+    print(f"РЕАЛЬНО РАБОЧИХ с пингом < {args.max_ping} мс: {len(verified_fast_keys)}")
 
-    if fast_keys:
-        safe_save_working_keys(fast_keys)
+    if verified_fast_keys:
+        safe_save_verified_keys(verified_fast_keys)
 
 
 if __name__ == "__main__":
