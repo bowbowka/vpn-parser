@@ -2554,3 +2554,13 @@ https://raw.githubusercontent.com/Technetium1/stars/main/sub.txt
 https://raw.githubusercontent.com/Technetium1/stars/main/sub/mix
 https://raw.githubusercontent.com/Technetium1/stars/main/v2ray
 https://raw.githubusercontent.com/Technetium1/stars/main/sub/all.txt
+https://raw.githubusercontent.com/arbal/awesome-stars/main/sub
+https://raw.githubusercontent.com/arbal/awesome-stars/main/sub/all.txt
+https://raw.githubusercontent.com/Aliazadi-1776/WProxy-v2ray/main/sub/mix
+https://raw.githubusercontent.com/Aliazadi-1776/WProxy-v2ray/main/sub
+https://raw.githubusercontent.com/arbal/awesome-stars/main/sub/mix
+https://raw.githubusercontent.com/Aliazadi-1776/WProxy-v2ray/main/sub/all.txt
+https://raw.githubusercontent.com/Aliazadi-1776/WProxy-v2ray/main/v2ray
+https://raw.githubusercontent.com/arbal/awesome-stars/main/v2ray
+https://raw.githubusercontent.com/Aliazadi-1776/WProxy-v2ray/main/sub.txt
+https://raw.githubusercontent.com/arbal/awesome-stars/main/sub.txt
