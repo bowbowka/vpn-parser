@@ -2549,3 +2549,8 @@ https://raw.githubusercontent.com/jxzzlfh/awesome-stars/master/v2ray
 https://raw.githubusercontent.com/maqibg/Stargazer/master/sub
 https://raw.githubusercontent.com/zhaoxiaoha/github-trending/main/sub/all.txt
 https://raw.githubusercontent.com/maqibg/Stargazer/master/sub.txt
+https://raw.githubusercontent.com/Technetium1/stars/main/sub
+https://raw.githubusercontent.com/Technetium1/stars/main/sub.txt
+https://raw.githubusercontent.com/Technetium1/stars/main/sub/mix
+https://raw.githubusercontent.com/Technetium1/stars/main/v2ray
+https://raw.githubusercontent.com/Technetium1/stars/main/sub/all.txt
