@@ -2614,3 +2614,8 @@ https://raw.githubusercontent.com/wangjiezhe/awesome-stars/master/sub/mix
 https://raw.githubusercontent.com/missuo/awesome-stars/master/v2ray
 https://raw.githubusercontent.com/nitish3128/real_project/main/sub/mix
 https://raw.githubusercontent.com/gaahrdner/starred/master/sub
+https://raw.githubusercontent.com/alipanahi8626-arch/Ali/main/sub
+https://raw.githubusercontent.com/alipanahi8626-arch/Ali/main/sub/all.txt
+https://raw.githubusercontent.com/alipanahi8626-arch/Ali/main/sub.txt
+https://raw.githubusercontent.com/alipanahi8626-arch/Ali/main/sub/mix
+https://raw.githubusercontent.com/alipanahi8626-arch/Ali/main/v2ray
