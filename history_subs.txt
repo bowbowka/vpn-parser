@@ -2629,3 +2629,8 @@ https://raw.githubusercontent.com/mehrdadmb2/V2ray_Sub/main/sub/mix
 https://raw.githubusercontent.com/mehrdadmb2/V2ray_Sub/main/sub.txt
 https://raw.githubusercontent.com/mehrdadmb2/V2ray_Sub/main/sub
 https://raw.githubusercontent.com/mehrdadmb2/V2ray_Sub/main/sub/all.txt
+https://raw.githubusercontent.com/legendary1205/rapido-go/master/sub/mix
+https://raw.githubusercontent.com/legendary1205/rapido-go/master/sub.txt
+https://raw.githubusercontent.com/legendary1205/rapido-go/master/sub
+https://raw.githubusercontent.com/legendary1205/rapido-go/master/v2ray
+https://raw.githubusercontent.com/legendary1205/rapido-go/master/sub/all.txt
