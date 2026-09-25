@@ -2619,3 +2619,8 @@ https://raw.githubusercontent.com/alipanahi8626-arch/Ali/main/sub/all.txt
 https://raw.githubusercontent.com/alipanahi8626-arch/Ali/main/sub.txt
 https://raw.githubusercontent.com/alipanahi8626-arch/Ali/main/sub/mix
 https://raw.githubusercontent.com/alipanahi8626-arch/Ali/main/v2ray
+https://raw.githubusercontent.com/SBKubric/sane-3x-ui/main/sub.txt
+https://raw.githubusercontent.com/SBKubric/sane-3x-ui/main/sub/mix
+https://raw.githubusercontent.com/SBKubric/sane-3x-ui/main/v2ray
+https://raw.githubusercontent.com/SBKubric/sane-3x-ui/main/sub/all.txt
+https://raw.githubusercontent.com/SBKubric/sane-3x-ui/main/sub
