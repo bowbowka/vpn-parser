@@ -2634,3 +2634,8 @@ https://raw.githubusercontent.com/legendary1205/rapido-go/master/sub.txt
 https://raw.githubusercontent.com/legendary1205/rapido-go/master/sub
 https://raw.githubusercontent.com/legendary1205/rapido-go/master/v2ray
 https://raw.githubusercontent.com/legendary1205/rapido-go/master/sub/all.txt
+https://raw.githubusercontent.com/Rezam61/Vpn-server/main/v2ray
+https://raw.githubusercontent.com/Rezam61/Vpn-server/main/sub
+https://raw.githubusercontent.com/Rezam61/Vpn-server/main/sub/all.txt
+https://raw.githubusercontent.com/Rezam61/Vpn-server/main/sub.txt
+https://raw.githubusercontent.com/Rezam61/Vpn-server/main/sub/mix
