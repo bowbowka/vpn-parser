@@ -2639,3 +2639,13 @@ https://raw.githubusercontent.com/Rezam61/Vpn-server/main/sub
 https://raw.githubusercontent.com/Rezam61/Vpn-server/main/sub/all.txt
 https://raw.githubusercontent.com/Rezam61/Vpn-server/main/sub.txt
 https://raw.githubusercontent.com/Rezam61/Vpn-server/main/sub/mix
+https://raw.githubusercontent.com/zhuozhiyongde/Stargazer/main/sub.txt
+https://raw.githubusercontent.com/zhuozhiyongde/Stargazer/main/sub/mix
+https://raw.githubusercontent.com/zhuozhiyongde/Stargazer/main/sub
+https://raw.githubusercontent.com/jafshare/GithubTrending/main/sub/all.txt
+https://raw.githubusercontent.com/jafshare/GithubTrending/main/v2ray
+https://raw.githubusercontent.com/jafshare/GithubTrending/main/sub.txt
+https://raw.githubusercontent.com/jafshare/GithubTrending/main/sub
+https://raw.githubusercontent.com/zhuozhiyongde/Stargazer/main/sub/all.txt
+https://raw.githubusercontent.com/jafshare/GithubTrending/main/sub/mix
+https://raw.githubusercontent.com/zhuozhiyongde/Stargazer/main/v2ray
