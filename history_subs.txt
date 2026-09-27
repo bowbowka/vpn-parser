@@ -2649,3 +2649,8 @@ https://raw.githubusercontent.com/jafshare/GithubTrending/main/sub
 https://raw.githubusercontent.com/zhuozhiyongde/Stargazer/main/sub/all.txt
 https://raw.githubusercontent.com/jafshare/GithubTrending/main/sub/mix
 https://raw.githubusercontent.com/zhuozhiyongde/Stargazer/main/v2ray
+https://raw.githubusercontent.com/b1ank1108/awesome-stars/master/sub
+https://raw.githubusercontent.com/b1ank1108/awesome-stars/master/sub.txt
+https://raw.githubusercontent.com/b1ank1108/awesome-stars/master/v2ray
+https://raw.githubusercontent.com/b1ank1108/awesome-stars/master/sub/all.txt
+https://raw.githubusercontent.com/b1ank1108/awesome-stars/master/sub/mix
