@@ -2669,3 +2669,13 @@ https://raw.githubusercontent.com/shuen2023/star/master/sub
 https://raw.githubusercontent.com/shuen2023/star/master/v2ray
 https://raw.githubusercontent.com/ang3lo-azevedo/my-awesome-stars/master/sub.txt
 https://raw.githubusercontent.com/shuen2023/star/master/sub/mix
+https://raw.githubusercontent.com/Lumskyy/LumoVessConfig/main/sub.txt
+https://raw.githubusercontent.com/Lumskyy/LumoVessConfig/main/v2ray
+https://raw.githubusercontent.com/krabt/krab/main/sub
+https://raw.githubusercontent.com/krabt/krab/main/sub/all.txt
+https://raw.githubusercontent.com/Lumskyy/LumoVessConfig/main/sub/mix
+https://raw.githubusercontent.com/krabt/krab/main/sub.txt
+https://raw.githubusercontent.com/Lumskyy/LumoVessConfig/main/sub/all.txt
+https://raw.githubusercontent.com/Lumskyy/LumoVessConfig/main/sub
+https://raw.githubusercontent.com/krabt/krab/main/v2ray
+https://raw.githubusercontent.com/krabt/krab/main/sub/mix
