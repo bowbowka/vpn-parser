@@ -2679,3 +2679,8 @@ https://raw.githubusercontent.com/Lumskyy/LumoVessConfig/main/sub/all.txt
 https://raw.githubusercontent.com/Lumskyy/LumoVessConfig/main/sub
 https://raw.githubusercontent.com/krabt/krab/main/v2ray
 https://raw.githubusercontent.com/krabt/krab/main/sub/mix
+https://raw.githubusercontent.com/Balder1840/awesome-stars/master/v2ray
+https://raw.githubusercontent.com/Balder1840/awesome-stars/master/sub/mix
+https://raw.githubusercontent.com/Balder1840/awesome-stars/master/sub
+https://raw.githubusercontent.com/Balder1840/awesome-stars/master/sub/all.txt
+https://raw.githubusercontent.com/Balder1840/awesome-stars/master/sub.txt
