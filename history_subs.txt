@@ -2694,3 +2694,13 @@ https://raw.githubusercontent.com/cbusifabcap/daily_free_vpn/main/sub/all.txt
 https://raw.githubusercontent.com/cbusifabcap/daily_free_vpn/main/v2ray
 https://raw.githubusercontent.com/cbusifabcap/daily_free_vpn/main/sub/mix
 https://raw.githubusercontent.com/cbusifabcap/daily_free_vpn/main/sub
+https://raw.githubusercontent.com/hoseyn111329-ui/-/main/sub
+https://raw.githubusercontent.com/hoseyn111329-ui/-/main/sub/mix
+https://raw.githubusercontent.com/hoseyn111329-ui/-/main/sub.txt
+https://raw.githubusercontent.com/hoseyn111329-ui/-/main/v2ray
+https://raw.githubusercontent.com/pwnnex/ByeByeVPN/main/sub.txt
+https://raw.githubusercontent.com/pwnnex/ByeByeVPN/main/v2ray
+https://raw.githubusercontent.com/pwnnex/ByeByeVPN/main/sub/all.txt
+https://raw.githubusercontent.com/hoseyn111329-ui/-/main/sub/all.txt
+https://raw.githubusercontent.com/pwnnex/ByeByeVPN/main/sub
+https://raw.githubusercontent.com/pwnnex/ByeByeVPN/main/sub/mix
