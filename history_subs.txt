@@ -2704,3 +2704,8 @@ https://raw.githubusercontent.com/pwnnex/ByeByeVPN/main/sub/all.txt
 https://raw.githubusercontent.com/hoseyn111329-ui/-/main/sub/all.txt
 https://raw.githubusercontent.com/pwnnex/ByeByeVPN/main/sub
 https://raw.githubusercontent.com/pwnnex/ByeByeVPN/main/sub/mix
+https://raw.githubusercontent.com/crazyuploader/Awesome-Starred/master/sub/mix
+https://raw.githubusercontent.com/crazyuploader/Awesome-Starred/master/sub
+https://raw.githubusercontent.com/crazyuploader/Awesome-Starred/master/sub/all.txt
+https://raw.githubusercontent.com/crazyuploader/Awesome-Starred/master/sub.txt
+https://raw.githubusercontent.com/crazyuploader/Awesome-Starred/master/v2ray
