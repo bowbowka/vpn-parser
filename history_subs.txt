@@ -2709,3 +2709,8 @@ https://raw.githubusercontent.com/crazyuploader/Awesome-Starred/master/sub
 https://raw.githubusercontent.com/crazyuploader/Awesome-Starred/master/sub/all.txt
 https://raw.githubusercontent.com/crazyuploader/Awesome-Starred/master/sub.txt
 https://raw.githubusercontent.com/crazyuploader/Awesome-Starred/master/v2ray
+https://raw.githubusercontent.com/rapidodev/rapido-go/master/sub
+https://raw.githubusercontent.com/rapidodev/rapido-go/master/sub/all.txt
+https://raw.githubusercontent.com/rapidodev/rapido-go/master/sub.txt
+https://raw.githubusercontent.com/rapidodev/rapido-go/master/sub/mix
+https://raw.githubusercontent.com/rapidodev/rapido-go/master/v2ray
