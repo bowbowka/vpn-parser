@@ -2714,3 +2714,8 @@ https://raw.githubusercontent.com/rapidodev/rapido-go/master/sub/all.txt
 https://raw.githubusercontent.com/rapidodev/rapido-go/master/sub.txt
 https://raw.githubusercontent.com/rapidodev/rapido-go/master/sub/mix
 https://raw.githubusercontent.com/rapidodev/rapido-go/master/v2ray
+https://raw.githubusercontent.com/Parsa013Ah/OpenCode-Unlimited-ProxyPool/main/sub/all.txt
+https://raw.githubusercontent.com/Parsa013Ah/OpenCode-Unlimited-ProxyPool/main/sub.txt
+https://raw.githubusercontent.com/Parsa013Ah/OpenCode-Unlimited-ProxyPool/main/sub/mix
+https://raw.githubusercontent.com/Parsa013Ah/OpenCode-Unlimited-ProxyPool/main/v2ray
+https://raw.githubusercontent.com/Parsa013Ah/OpenCode-Unlimited-ProxyPool/main/sub
