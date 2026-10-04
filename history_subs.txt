@@ -2724,3 +2724,13 @@ https://raw.githubusercontent.com/enhansome/enhansome-android-root/main/v2ray
 https://raw.githubusercontent.com/enhansome/enhansome-android-root/main/sub.txt
 https://raw.githubusercontent.com/enhansome/enhansome-android-root/main/sub/all.txt
 https://raw.githubusercontent.com/enhansome/enhansome-android-root/main/sub/mix
+https://raw.githubusercontent.com/viktorbezdek/awesome-github-projects/main/sub
+https://raw.githubusercontent.com/viktorbezdek/awesome-github-projects/main/sub.txt
+https://raw.githubusercontent.com/StrayDragon/awesome-stars/main/sub.txt
+https://raw.githubusercontent.com/StrayDragon/awesome-stars/main/sub/all.txt
+https://raw.githubusercontent.com/StrayDragon/awesome-stars/main/sub/mix
+https://raw.githubusercontent.com/viktorbezdek/awesome-github-projects/main/sub/all.txt
+https://raw.githubusercontent.com/StrayDragon/awesome-stars/main/sub
+https://raw.githubusercontent.com/viktorbezdek/awesome-github-projects/main/v2ray
+https://raw.githubusercontent.com/StrayDragon/awesome-stars/main/v2ray
+https://raw.githubusercontent.com/viktorbezdek/awesome-github-projects/main/sub/mix
