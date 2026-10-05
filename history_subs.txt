@@ -2734,3 +2734,8 @@ https://raw.githubusercontent.com/StrayDragon/awesome-stars/main/sub
 https://raw.githubusercontent.com/viktorbezdek/awesome-github-projects/main/v2ray
 https://raw.githubusercontent.com/StrayDragon/awesome-stars/main/v2ray
 https://raw.githubusercontent.com/viktorbezdek/awesome-github-projects/main/sub/mix
+https://raw.githubusercontent.com/xwal/awesome-stars/master/sub.txt
+https://raw.githubusercontent.com/xwal/awesome-stars/master/sub/mix
+https://raw.githubusercontent.com/xwal/awesome-stars/master/v2ray
+https://raw.githubusercontent.com/xwal/awesome-stars/master/sub/all.txt
+https://raw.githubusercontent.com/xwal/awesome-stars/master/sub
