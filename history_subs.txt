@@ -2739,3 +2739,8 @@ https://raw.githubusercontent.com/xwal/awesome-stars/master/sub/mix
 https://raw.githubusercontent.com/xwal/awesome-stars/master/v2ray
 https://raw.githubusercontent.com/xwal/awesome-stars/master/sub/all.txt
 https://raw.githubusercontent.com/xwal/awesome-stars/master/sub
+https://raw.githubusercontent.com/MotherofallVPNs/moav-client/main/v2ray
+https://raw.githubusercontent.com/MotherofallVPNs/moav-client/main/sub/all.txt
+https://raw.githubusercontent.com/MotherofallVPNs/moav-client/main/sub/mix
+https://raw.githubusercontent.com/MotherofallVPNs/moav-client/main/sub.txt
+https://raw.githubusercontent.com/MotherofallVPNs/moav-client/main/sub
