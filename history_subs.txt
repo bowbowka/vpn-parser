@@ -2759,3 +2759,13 @@ https://raw.githubusercontent.com/fscorrupt/awesome-stars/master/sub/all.txt
 https://raw.githubusercontent.com/JunJiangWang/awesome-stars/main/sub.txt
 https://raw.githubusercontent.com/JunJiangWang/awesome-stars/main/sub/all.txt
 https://raw.githubusercontent.com/fscorrupt/awesome-stars/master/sub.txt
+https://raw.githubusercontent.com/XCool-603/clash-dotnet/main/sub
+https://raw.githubusercontent.com/EasySBTeam/EasySB-Examples/master/sub/mix
+https://raw.githubusercontent.com/EasySBTeam/EasySB-Examples/master/sub.txt
+https://raw.githubusercontent.com/EasySBTeam/EasySB-Examples/master/v2ray
+https://raw.githubusercontent.com/XCool-603/clash-dotnet/main/sub/mix
+https://raw.githubusercontent.com/EasySBTeam/EasySB-Examples/master/sub/all.txt
+https://raw.githubusercontent.com/XCool-603/clash-dotnet/main/sub/all.txt
+https://raw.githubusercontent.com/XCool-603/clash-dotnet/main/sub.txt
+https://raw.githubusercontent.com/EasySBTeam/EasySB-Examples/master/sub
+https://raw.githubusercontent.com/XCool-603/clash-dotnet/main/v2ray
