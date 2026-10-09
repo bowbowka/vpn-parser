@@ -2769,3 +2769,8 @@ https://raw.githubusercontent.com/XCool-603/clash-dotnet/main/sub/all.txt
 https://raw.githubusercontent.com/XCool-603/clash-dotnet/main/sub.txt
 https://raw.githubusercontent.com/EasySBTeam/EasySB-Examples/master/sub
 https://raw.githubusercontent.com/XCool-603/clash-dotnet/main/v2ray
+https://raw.githubusercontent.com/megamen32/vpn-panel-public/main/v2ray
+https://raw.githubusercontent.com/megamen32/vpn-panel-public/main/sub
+https://raw.githubusercontent.com/megamen32/vpn-panel-public/main/sub.txt
+https://raw.githubusercontent.com/megamen32/vpn-panel-public/main/sub/mix
+https://raw.githubusercontent.com/megamen32/vpn-panel-public/main/sub/all.txt
