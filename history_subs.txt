@@ -2774,3 +2774,8 @@ https://raw.githubusercontent.com/megamen32/vpn-panel-public/main/sub
 https://raw.githubusercontent.com/megamen32/vpn-panel-public/main/sub.txt
 https://raw.githubusercontent.com/megamen32/vpn-panel-public/main/sub/mix
 https://raw.githubusercontent.com/megamen32/vpn-panel-public/main/sub/all.txt
+https://raw.githubusercontent.com/uhub/awesome-c-sharp/master/sub.txt
+https://raw.githubusercontent.com/uhub/awesome-c-sharp/master/sub/mix
+https://raw.githubusercontent.com/uhub/awesome-c-sharp/master/sub
+https://raw.githubusercontent.com/uhub/awesome-c-sharp/master/sub/all.txt
+https://raw.githubusercontent.com/uhub/awesome-c-sharp/master/v2ray
