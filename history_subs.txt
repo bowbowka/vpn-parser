@@ -2784,3 +2784,13 @@ https://raw.githubusercontent.com/EasyXrayTeam/EasySB-Examples/master/sub/mix
 https://raw.githubusercontent.com/EasyXrayTeam/EasySB-Examples/master/v2ray
 https://raw.githubusercontent.com/EasyXrayTeam/EasySB-Examples/master/sub
 https://raw.githubusercontent.com/EasyXrayTeam/EasySB-Examples/master/sub/all.txt
+https://raw.githubusercontent.com/Maxx-Yang/my-awesome-stars/master/v2ray
+https://raw.githubusercontent.com/felixlu/awesome-stars/main/sub.txt
+https://raw.githubusercontent.com/felixlu/awesome-stars/main/sub
+https://raw.githubusercontent.com/felixlu/awesome-stars/main/sub/mix
+https://raw.githubusercontent.com/Maxx-Yang/my-awesome-stars/master/sub/mix
+https://raw.githubusercontent.com/felixlu/awesome-stars/main/sub/all.txt
+https://raw.githubusercontent.com/Maxx-Yang/my-awesome-stars/master/sub
+https://raw.githubusercontent.com/felixlu/awesome-stars/main/v2ray
+https://raw.githubusercontent.com/Maxx-Yang/my-awesome-stars/master/sub.txt
+https://raw.githubusercontent.com/Maxx-Yang/my-awesome-stars/master/sub/all.txt
