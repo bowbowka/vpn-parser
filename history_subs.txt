@@ -2794,3 +2794,8 @@ https://raw.githubusercontent.com/Maxx-Yang/my-awesome-stars/master/sub
 https://raw.githubusercontent.com/felixlu/awesome-stars/main/v2ray
 https://raw.githubusercontent.com/Maxx-Yang/my-awesome-stars/master/sub.txt
 https://raw.githubusercontent.com/Maxx-Yang/my-awesome-stars/master/sub/all.txt
+https://raw.githubusercontent.com/uhub/awesome-cpp/master/sub
+https://raw.githubusercontent.com/uhub/awesome-cpp/master/sub/mix
+https://raw.githubusercontent.com/uhub/awesome-cpp/master/sub.txt
+https://raw.githubusercontent.com/uhub/awesome-cpp/master/v2ray
+https://raw.githubusercontent.com/uhub/awesome-cpp/master/sub/all.txt
