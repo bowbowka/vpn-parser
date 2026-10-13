@@ -2799,3 +2799,8 @@ https://raw.githubusercontent.com/uhub/awesome-cpp/master/sub/mix
 https://raw.githubusercontent.com/uhub/awesome-cpp/master/sub.txt
 https://raw.githubusercontent.com/uhub/awesome-cpp/master/v2ray
 https://raw.githubusercontent.com/uhub/awesome-cpp/master/sub/all.txt
+https://raw.githubusercontent.com/antlis/UnbloatedTube/master/sub/mix
+https://raw.githubusercontent.com/antlis/UnbloatedTube/master/sub.txt
+https://raw.githubusercontent.com/antlis/UnbloatedTube/master/sub/all.txt
+https://raw.githubusercontent.com/antlis/UnbloatedTube/master/sub
+https://raw.githubusercontent.com/antlis/UnbloatedTube/master/v2ray
