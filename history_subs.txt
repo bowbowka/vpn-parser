@@ -2804,3 +2804,8 @@ https://raw.githubusercontent.com/antlis/UnbloatedTube/master/sub.txt
 https://raw.githubusercontent.com/antlis/UnbloatedTube/master/sub/all.txt
 https://raw.githubusercontent.com/antlis/UnbloatedTube/master/sub
 https://raw.githubusercontent.com/antlis/UnbloatedTube/master/v2ray
+https://raw.githubusercontent.com/iakat/stars/master/sub.txt
+https://raw.githubusercontent.com/iakat/stars/master/sub
+https://raw.githubusercontent.com/iakat/stars/master/sub/all.txt
+https://raw.githubusercontent.com/iakat/stars/master/sub/mix
+https://raw.githubusercontent.com/iakat/stars/master/v2ray
