@@ -2814,3 +2814,8 @@ https://raw.githubusercontent.com/zhongyin/zhongyin.github.io/master/v2ray
 https://raw.githubusercontent.com/zhongyin/zhongyin.github.io/master/sub/mix
 https://raw.githubusercontent.com/zhongyin/zhongyin.github.io/master/sub
 https://raw.githubusercontent.com/zhongyin/zhongyin.github.io/master/sub/all.txt
+https://raw.githubusercontent.com/uhub/awesome-dart/master/sub/mix
+https://raw.githubusercontent.com/uhub/awesome-dart/master/sub/all.txt
+https://raw.githubusercontent.com/uhub/awesome-dart/master/sub.txt
+https://raw.githubusercontent.com/uhub/awesome-dart/master/v2ray
+https://raw.githubusercontent.com/uhub/awesome-dart/master/sub
