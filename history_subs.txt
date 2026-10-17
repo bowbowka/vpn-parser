@@ -2829,3 +2829,8 @@ https://raw.githubusercontent.com/TuftyTech/ShellShift/main/sub.txt
 https://raw.githubusercontent.com/echoe32/shimmer/main/sub/all.txt
 https://raw.githubusercontent.com/echoe32/shimmer/main/sub.txt
 https://raw.githubusercontent.com/TuftyTech/ShellShift/main/sub
+https://raw.githubusercontent.com/uhub/awesome-go/master/sub/mix
+https://raw.githubusercontent.com/uhub/awesome-go/master/sub.txt
+https://raw.githubusercontent.com/uhub/awesome-go/master/v2ray
+https://raw.githubusercontent.com/uhub/awesome-go/master/sub
+https://raw.githubusercontent.com/uhub/awesome-go/master/sub/all.txt
