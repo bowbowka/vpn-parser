@@ -1,5 +1,9 @@
 # VPN Parser & Key Checker
 
+<!-- SUB_BADGE -->
+> 🔑 **Рабочих серверов:** `136` &nbsp;|&nbsp; 🕐 Обновлено: `2026-10-17 19:11 UTC`
+<!-- /SUB_BADGE -->
+
 Комплексный инструмент для автоматического поиска, сбора, фильтрации и проверки работоспособности VPN-ключей и подписок (VLESS Reality, VMess, Shadowsocks, Trojan, Hysteria 2, TUIC).
 
 ---
