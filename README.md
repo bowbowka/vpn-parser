@@ -119,6 +119,7 @@ python -m unittest tests.test_vpn_utils -v
 | Файл | Описание |
 | :--- | :--- |
 | `vpn_finder.py` | Основной модуль: поиск подписок, сбор ключей из TG, GitHub; CLI с argparse |
+| `xray_checker.py` | Валидатор реального трафика через Xray Core (HTTP 204 выход в интернет) |
 | `vpn_utils.py` | Ядро: декодирование Base64, парсинг ключей (VLESS, VMess, SS/SSR, Trojan, Hy2, TUIC), TLS/TCP пинг |
 | `check_vpn.py` | Быстрый параллельный TCP/UDP пингер с argparse |
 | `tls_checker.py` | Глубокий TLS Handshake валидатор с argparse |
@@ -138,9 +139,12 @@ python -m unittest tests.test_vpn_utils -v
 | :--- | :--- | :--- |
 | `--find-only` | — | Только поиск новых подписок, без пинга |
 | `--check-only` | — | Только проверка существующих, без поиска |
-| `--tls` / `--no-tls` | `--tls` | Глубокая TLS проверка / только TCP |
-| `--max-ping` | `120` | Порог задержки в мс |
-| `--threads` | `35` | Число параллельных потоков |
+| `--xray` / `--no-xray` | `--xray` | Проверка реального трафика через Xray Core (HTTP 204) |
+| `--limit-xray` | `100` | Максимум ключей для глубокой проверки Xray |
+| `--xray-threads` | `10` | Число параллельных потоков Xray |
+| `--tls` / `--no-tls` | `--tls` | Глубокая TLS проверка / только TCP (fallback) |
+| `--max-ping` | `300` | Порог TCP-задержки в мс |
+| `--threads` | `35` | Число параллельных потоков TCP |
 | `--limit-check` | `1000` | Максимум ключей за один прогон |
 | `--max-sub` | `100` | Максимум серверов в `sub.txt` |
 

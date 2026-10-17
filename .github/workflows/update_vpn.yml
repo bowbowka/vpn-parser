@@ -34,6 +34,15 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Install Xray Core
+        run: |
+          mkdir -p bin
+          curl -L -s -o xray.zip https://github.com/XTLS/Xray-core/releases/download/v24.11.11/Xray-linux-64.zip
+          unzip -o xray.zip xray -d bin/
+          chmod +x bin/xray
+          echo "$GITHUB_WORKSPACE/bin" >> $GITHUB_PATH
+          bin/xray version
+
       - name: Run unit tests
         run: |
           python -m pytest tests/ -v || python -m unittest discover -s tests -v
@@ -42,7 +51,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          python vpn_finder.py --max-ping 200 --threads 40 --limit-check 1500 --max-sub 200
+          python vpn_finder.py --xray --max-ping 300 --threads 40 --limit-check 1500 --limit-xray 150 --max-sub 200
 
       - name: Update subscription badge in README
         run: |

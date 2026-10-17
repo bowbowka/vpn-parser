@@ -28,6 +28,7 @@ from vpn_utils import (
     ping_and_tls_check,
     ping_key,
 )
+from xray_checker import batch_verify_keys_xray, ensure_xray_binary
 
 VALID_SUBS_FILE = "valid_subscriptions.txt"
 HISTORY_SUBS_FILE = "history_subs.txt"
@@ -267,15 +268,27 @@ def main():
     parser.add_argument("--find-only", action="store_true", help="Только найти и обновить подписки")
     parser.add_argument("--check-only", action="store_true", help="Только проверить существующие подписки")
     parser.add_argument(
-        "--tls", action="store_true", default=True, help="Глубокая TLS проверка (по умолчанию)"
+        "--xray", action="store_true", default=True, help="Глубокая проверка реального трафика через Xray (по умолчанию: включено)"
+    )
+    parser.add_argument(
+        "--no-xray", dest="xray", action="store_false", help="Отключить проверку через Xray"
+    )
+    parser.add_argument(
+        "--limit-xray", type=int, default=100, help="Максимум ключей для проверки через Xray (по умолчанию: 100)"
+    )
+    parser.add_argument(
+        "--xray-threads", type=int, default=10, help="Число параллельных потоков Xray (по умолчанию: 10)"
+    )
+    parser.add_argument(
+        "--tls", action="store_true", default=True, help="Глубокая TLS проверка (fallback, если Xray выключен)"
     )
     parser.add_argument(
         "--no-tls", dest="tls", action="store_false", help="Только быстрый TCP пинг"
     )
     parser.add_argument(
-        "--max-ping", type=int, default=120, help="Максимально допустимый пинг в мс (по умолчанию: 120)"
+        "--max-ping", type=int, default=300, help="Максимально допустимый TCP пинг в мс (по умолчанию: 300)"
     )
-    parser.add_argument("--threads", type=int, default=35, help="Число параллельных потоков")
+    parser.add_argument("--threads", type=int, default=35, help="Число параллельных потоков для TCP пинга")
     parser.add_argument(
         "--limit-check", type=int, default=1000, help="Максимум ключей для проверки за один прогон"
     )
@@ -340,37 +353,56 @@ def main():
 
     keys_to_ping = unique_keys[: args.limit_check] if args.limit_check > 0 else unique_keys
     print(
-        f"[*] Начинаем жесткую фильтрацию {len(keys_to_ping)} ключей"
+        f"[*] Этап 1: Предварительный TCP-фильтр {len(keys_to_ping)} ключей"
         f" (порог < {args.max_ping} мс)..."
     )
 
-    check_fn = ping_and_tls_check if args.tls else ping_key
-    check_name = "TLS Handshake" if args.tls else "TCP Ping"
-
-    working_keys: list[tuple[float, str]] = []
+    tcp_candidates: list[tuple[float, str]] = []
     with ThreadPoolExecutor(max_workers=args.threads) as executor:
-        futures = {executor.submit(check_fn, key, 2.0): key for key in keys_to_ping}
+        futures = {executor.submit(ping_key, key, 1.5): key for key in keys_to_ping}
         for i, future in enumerate(as_completed(futures), 1):
             key, latency = future.result()
             if latency is not None and latency < args.max_ping:
-                working_keys.append((latency, key))
-                print(f"[{i}/{len(keys_to_ping)}] [OK] {latency} мс | {key[:55]}...")
-            elif latency is not None:
-                if i % 50 == 0:
-                    print(f"[{i}/{len(keys_to_ping)}] [SLOW] {latency} мс")
-            else:
-                if i % 100 == 0:
-                    print(f"[{i}/{len(keys_to_ping)}] ...")
+                tcp_candidates.append((latency, key))
+                if len(tcp_candidates) % 25 == 0:
+                    print(f"    [{i}/{len(keys_to_ping)}] Найдено доступных по TCP: {len(tcp_candidates)}")
 
-    # Сортируем от самых быстрых (минимальный пинг) к более медленным
-    working_keys.sort(key=lambda x: x[0])
-    verified_fast_keys = [k for _, k in working_keys]
+    tcp_candidates.sort(key=lambda x: x[0])
+    candidates = [k for _, k in tcp_candidates]
+    print(f"[OK] Этап 1 завершен: {len(candidates)} кандидатов с открытым портом.")
+
+    verified_fast_keys: list[str] = []
+    check_name = "TCP Ping"
+
+    # Этап 2: Глубокая проверка реального трафика через Xray (если доступен)
+    xray_bin = ensure_xray_binary() if args.xray else None
+    if xray_bin and candidates:
+        check_name = "Xray Core 204 Real Traffic Check"
+        to_verify = candidates[: args.limit_xray]
+        print(f"\n[*] Этап 2: Глубокая проверка {len(to_verify)} лучших кандидатов через Xray Core...")
+        verified_results = batch_verify_keys_xray(
+            to_verify, xray_bin, max_workers=args.xray_threads, timeout=3.5
+        )
+        verified_fast_keys = [k for _, k in verified_results]
+    else:
+        # Fallback: проверка через TLS Handshake или TCP
+        check_fn = ping_and_tls_check if args.tls else ping_key
+        check_name = "TLS Handshake" if args.tls else "TCP Ping"
+        fallback_results: list[tuple[float, str]] = []
+        with ThreadPoolExecutor(max_workers=args.threads) as executor:
+            futures = {executor.submit(check_fn, key, 2.0): key for key in candidates[:args.limit_xray]}
+            for future in as_completed(futures):
+                key, latency = future.result()
+                if latency is not None and latency < args.max_ping:
+                    fallback_results.append((latency, key))
+        fallback_results.sort(key=lambda x: x[0])
+        verified_fast_keys = [k for _, k in fallback_results]
 
     print("=" * 65)
     print("[*] ИТОГИ ПРОВЕРКИ:")
     print(f"Метод проверки: {check_name}")
-    print(f"Проверено: {len(keys_to_ping)} ключей")
-    print(f"РЕАЛЬНО РАБОЧИХ с пингом < {args.max_ping} мс: {len(verified_fast_keys)}")
+    print(f"Проверено кандидатов: {len(keys_to_ping)}")
+    print(f"РЕАЛЬНО РАБОЧИХ серверов с доступом в интернет: {len(verified_fast_keys)}")
 
     if verified_fast_keys:
         safe_save_verified_keys(verified_fast_keys, max_sub_servers=args.max_sub)
