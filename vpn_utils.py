@@ -24,9 +24,9 @@ DEFAULT_HEADERS = {
     "Accept": "*/*",
 }
 
-# Регулярное выражение поиска ссылок (non-capturing group для схемы)
+# Регулярное выражение поиска ссылок (предотвращает склеивание соседних ссылок)
 VPN_PROTOCOLS_REGEX = re.compile(
-    r"(?<![a-zA-Z0-9])(?:vless|vmess|trojan|ss|ssr|tuic|hy2|hysteria2)://[^\s<>\"'`\\]+",
+    r"(?<![a-zA-Z0-9])(?:vless|vmess|trojan|ss|ssr|tuic|hy2|hysteria2)://(?:(?!(?:vless|vmess|trojan|ss|ssr|tuic|hy2|hysteria2)://)[^\s<>\"'`\\])+",
     re.IGNORECASE,
 )
 
@@ -40,6 +40,12 @@ INVALID_DOMAINS = {
     "raw.githubusercontent.com",
     "t.me",
     "telegram.org",
+    "example.com",
+    "example.org",
+    "example.net",
+    "localhost",
+    "127.0.0.1",
+    "0.0.0.0",
 }
 
 
@@ -149,6 +155,10 @@ def extract_keys_from_text(text: str) -> list[str]:
         if not ck or ck in seen:
             continue
 
+        # Защита от склеенных ссылок (если внутри тела ссылки снова встретилось ://)
+        if "://" in ck.split("://", 1)[1]:
+            continue
+
         details = parse_key_details(ck)
         if not details or not details.get("host") or not details.get("port"):
             continue
@@ -156,6 +166,18 @@ def extract_keys_from_text(text: str) -> list[str]:
         host_lower = details["host"].lower()
         if host_lower in INVALID_DOMAINS or host_lower.endswith(".json"):
             continue
+
+        # Защита от фейковых и тестовых ключей
+        if details["scheme"] == "vless":
+            parsed = urllib.parse.urlparse(ck)
+            user = (parsed.username or "").lower()
+            if user in ("uuid", "<uuid>", "user", "username"):
+                continue
+
+        # Shadowsocks не может иметь параметров Reality
+        if details["scheme"] in ("ss", "ssr"):
+            if "security=reality" in ck.lower() or "xtls-rprx-vision" in ck.lower():
+                continue
 
         seen.add(ck)
         valid_keys.append(ck)

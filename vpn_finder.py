@@ -38,6 +38,7 @@ OUTPUT_SUB_FILE = "sub.txt"
 MAX_SUB_SERVERS = 100
 
 CURATED_SOURCES = [
+    "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/All_Configs_Sub.txt",
     "https://raw.githubusercontent.com/mahdibland/V2RayAggregator/master/sub/sub_merge.txt",
     "https://raw.githubusercontent.com/itsyebekhe/PSG/main/subscriptions/xray/mix",
     "https://raw.githubusercontent.com/ermaozi/get_subscribe/main/subscribe/v2ray.txt",
@@ -45,15 +46,6 @@ CURATED_SOURCES = [
     "https://raw.githubusercontent.com/roosterkid/openproxylist/main/V2RAY_RAW.txt",
     "https://raw.githubusercontent.com/freefq/free/master/v2",
     "https://raw.githubusercontent.com/Pawdroid/Free-servers/main/sub",
-    "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Sub1.txt",
-    "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Sub2.txt",
-    "https://raw.githubusercontent.com/barry-far/V2ray-Configs/main/Splitted-By-Protocol/vless.txt",
-    "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/reality",
-    "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/vless",
-    "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/trojan",
-    "https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/shadowsocks",
-    "https://raw.githubusercontent.com/vfarid/v2ray-share/master/splitted/normal-reality.txt",
-    "https://raw.githubusercontent.com/MrPooyaX/VpnCollectors/main/sub/mix",
     "https://cdn.jsdelivr.net/gh/ShatakVPN/ConfigForge-V2Ray@main/configs/all.txt",
     "https://cdn.jsdelivr.net/gh/ShatakVPN/ConfigForge-V2Ray@main/configs/vless.txt",
     "https://cdn.jsdelivr.net/gh/ShatakVPN/ConfigForge-V2Ray@main/configs/shadowsocks.txt",
@@ -233,7 +225,10 @@ def safe_save_verified_keys(verified_keys: list[str], max_sub_servers: int = MAX
         print("[!] Нет проверенных ключей для сохранения.")
         return
 
-    cleaned_keys = deduplicate_keys(verified_keys)
+    # Объединяем новые проверенные ключи с существующими, сохраняя порядок
+    existing_keys = load_lines(OUTPUT_KEYS_FILE)
+    combined = verified_keys + [k for k in existing_keys if k not in verified_keys]
+    cleaned_keys = deduplicate_keys(combined)
 
     if not cleaned_keys:
         print("[!] После очистки не осталось ключей для сохранения.")
