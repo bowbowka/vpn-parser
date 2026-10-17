@@ -41,30 +41,32 @@ MAX_SUB_SERVERS = 100
 
 CURATED_SOURCES = [
     "https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/All_Configs_Sub.txt",
+    "https://raw.githubusercontent.com/roosterkid/openproxylist/main/V2RAY_RAW.txt",
     "https://raw.githubusercontent.com/mahdibland/V2RayAggregator/master/sub/sub_merge.txt",
     "https://raw.githubusercontent.com/itsyebekhe/PSG/main/subscriptions/xray/mix",
     "https://raw.githubusercontent.com/ermaozi/get_subscribe/main/subscribe/v2ray.txt",
     "https://raw.githubusercontent.com/ts-sf/fly/main/v2",
-    "https://raw.githubusercontent.com/roosterkid/openproxylist/main/V2RAY_RAW.txt",
     "https://raw.githubusercontent.com/freefq/free/master/v2",
     "https://raw.githubusercontent.com/Pawdroid/Free-servers/main/sub",
     "https://cdn.jsdelivr.net/gh/ShatakVPN/ConfigForge-V2Ray@main/configs/all.txt",
     "https://cdn.jsdelivr.net/gh/ShatakVPN/ConfigForge-V2Ray@main/configs/vless.txt",
-    "https://cdn.jsdelivr.net/gh/ShatakVPN/ConfigForge-V2Ray@main/configs/shadowsocks.txt",
 ]
 
 TELEGRAM_CHANNELS = [
+    "v2ray_alpha",
     "Outline_Vpn",
-    "PrivateVPNs",
-    "DirectVPN",
-    "v2ray_outlineir",
+    "marambashi",
+    "proxystore11",
     "vpn_ocean",
+    "FreeV2rays",
+    "v2ray_free_conf",
+    "DirectVPN",
+    "PrivateVPNs",
+    "v2ray_outlineir",
     "v2rayng_org",
     "customv2ray",
     "V2rayNG_VPNN",
     "v2ray_custom",
-    "v2ray_alpha",
-    "proxystore11",
 ]
 
 
@@ -232,9 +234,8 @@ def safe_save_verified_keys(verified_keys: list[str], max_sub_servers: int = MAX
     # 1. Эталонные WolfPN ключи
     wolf_keys = [k for k in existing_keys if "WolfPN" in k or "pyaterka" in k or "ozon" in k or "vkvideo" in k]
 
-    # 2. Объединяем и фильтруем публичные ключи (макс 2 ключа на подсеть, без fuck.rkn и .ir)
-    raw_public = verified_keys + [k for k in existing_keys if k not in wolf_keys]
-    diversified_public = filter_and_diversify_keys(raw_public, max_per_subnet=2)
+    # 2. Фильтруем и диверсифицируем только РЕАЛЬНО проверенные публичные ключи
+    diversified_public = filter_and_diversify_keys(verified_keys, max_per_subnet=2)
 
     combined = wolf_keys + [k for k in diversified_public if k not in wolf_keys]
     cleaned_keys = deduplicate_keys(combined)
@@ -335,31 +336,44 @@ def main():
 
     fetch_time = round(time.perf_counter() - start_fetch, 1)
 
-    # Очищаем и дедуплицируем собранные ключи
-    unique_keys = deduplicate_keys(collected_keys)
+    # Очищаем, фильтруем от цензуры/спама и дедуплицируем собранные ключи
+    clean_candidates = filter_and_diversify_keys(unique_keys, max_per_subnet=3)
+    print(f"[*] Собрано {len(unique_keys)} сырых ключей (за {fetch_time} сек).")
+    print(f"[*] Отобрано {len(clean_candidates)} качественных кандидатов для проверки (порты 443/8443, без toxic SNI).")
 
-    print(f"[*] Собрано {len(unique_keys)} уникальных свежих ключей (за {fetch_time} сек).")
-
-    if not unique_keys:
-        print("[!] Нет ключей для проверки.")
+    if not clean_candidates:
+        print("[!] Нет подходящих ключей для проверки.")
         return
 
-    # Приоритет: сначала VLESS Reality, Trojan, Hysteria2 (они лучше всего работают в РФ)
+    # Приоритет: сначала VLESS Reality на 443 порту с российскими и корпоративными SNI
     def key_priority(k: str) -> int:
         k_lower = k.lower()
-        if "reality" in k_lower:
+        d = parse_key_details(k)
+        port = d.get("port") if d else None
+        sni = (d.get("sni") or "").lower() if d else ""
+        
+        is_ru_or_corp = any(domain in sni for domain in [
+            ".ru", "videobereg.cc", "samsung.com", "logitech.com",
+            "apple.com", "microsoft.com", "nvidia.com", "yandex", "vk"
+        ])
+
+        if "reality" in k_lower and port == 443 and is_ru_or_corp:
             return 0
-        if k_lower.startswith("vless://"):
+        if "reality" in k_lower and port == 443:
             return 1
-        if k_lower.startswith("trojan://"):
+        if "reality" in k_lower:
             return 2
-        if k_lower.startswith("hy2://") or k_lower.startswith("hysteria2://"):
+        if k_lower.startswith("vless://"):
             return 3
-        return 4
+        if k_lower.startswith("trojan://"):
+            return 4
+        if k_lower.startswith("hy2://") or k_lower.startswith("hysteria2://"):
+            return 5
+        return 6
 
-    unique_keys.sort(key=key_priority)
+    clean_candidates.sort(key=key_priority)
 
-    keys_to_ping = unique_keys[: args.limit_check] if args.limit_check > 0 else unique_keys
+    keys_to_ping = clean_candidates[: args.limit_check] if args.limit_check > 0 else clean_candidates
     print(
         f"[*] Этап 1: Предварительный TCP-фильтр {len(keys_to_ping)} ключей"
         f" (порог < {args.max_ping} мс)..."

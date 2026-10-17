@@ -86,18 +86,38 @@ def clean_key(key: str) -> str:
 
     # Удаляем мусорные знаки препинания и закрывающие скобки на концах URL
     key = re.sub(r"[\.,;:!\)\]>\'\"]+$", "", key.strip())
+    # Заменяем пустой fp= на безопасный firefox
+    key = key.replace("fp=&", "fp=firefox&").replace("fp=#", "fp=firefox#")
     return key
 
 
-BLOCKED_SNI_KEYWORDS = ["rkn", "fuck", ".ir"]
+BLOCKED_SNI_KEYWORDS = [
+    "rkn", "fuck", ".ir", "navalny",
+    "cloudflare.com", ".cf", "cf-",
+]
+
+BLOCKED_HOST_PREFIXES = ["169.40.", "169.41."]
+ALLOWED_PORTS = {443, 8443, 2053, 2083, 2087, 2096}
 
 
 def is_sni_allowed(sni: str) -> bool:
-    """Проверяет, не заблокирован ли SNI в РФ цензурными стоп-словами."""
+    """Проверяет, не заблокирован ли SNI в РФ цензурными стоп-словами или TSPU."""
     if not sni:
         return True
     sl = sni.lower()
     return not any(kw in sl for kw in BLOCKED_SNI_KEYWORDS)
+
+
+def is_host_allowed(host: str) -> bool:
+    """Проверяет хост на принадлежность к заблокированным датацентрам и стоп-словам."""
+    if not host:
+        return False
+    hl = host.lower()
+    if any(hl.startswith(p) for p in BLOCKED_HOST_PREFIXES):
+        return False
+    if "cloudflare" in hl:
+        return False
+    return is_sni_allowed(hl)
 
 
 def get_host_subnet(host: str) -> str:
@@ -123,27 +143,44 @@ def deduplicate_keys(keys: list[str]) -> list[str]:
 
 def filter_and_diversify_keys(keys: list[str], max_per_subnet: int = 2) -> list[str]:
     """
-    Фильтрует заблокированные в РФ SNI и ограничивает дубликаты подсетей,
-    чтобы один хостер не забивал всю подписку одинаковыми серверами.
+    Фильтрует заблокированные в РФ SNI, нестандартные порты и ограничивает дубликаты подсетей,
+    чтобы один хостер или спам-сервер не забивал всю подписку одинаковыми узлами.
     """
     subnet_count: dict[str, int] = {}
+    seen_identities: set[tuple[str, int, str]] = set()
     result: list[str] = []
+
     for k in keys:
         d = parse_key_details(k)
         if not d:
             continue
-        sni = d.get("sni", "")
-        host = d.get("host", "")
-        if not is_sni_allowed(sni) or not is_sni_allowed(host):
+        sni = (d.get("sni") or "").lower()
+        host = (d.get("host") or "").lower()
+        port = d.get("port")
+
+        # Разрешаем только стандартные HTTPS порты (нестандартные порты часто режутся ТСПУ)
+        if port not in ALLOWED_PORTS:
             continue
-        # Исключаем Cloudflare IP с cloudflare SNI (часто блокируется в РФ)
-        if "cloudflare" in sni.lower() and "cloudflare" in host.lower():
+
+        if not is_sni_allowed(sni) or not is_host_allowed(host):
             continue
+
+        # Убираем дублирование одного и того же физического сервера с разными хештегами
+        uuid = ""
+        if "://" in k and "@" in k:
+            uuid = k.split("://", 1)[1].split("@", 1)[0]
+        ident = (host, port, uuid)
+        if ident in seen_identities:
+            continue
+
         sub = get_host_subnet(host)
         if subnet_count.get(sub, 0) >= max_per_subnet:
             continue
+
+        seen_identities.add(ident)
         subnet_count[sub] = subnet_count.get(sub, 0) + 1
         result.append(k)
+
     return result
 
 
