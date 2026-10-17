@@ -1,8 +1,8 @@
-﻿name: Auto-update VPN Subscriptions & Keys
+name: Auto-update VPN Subscriptions & Keys
 
 on:
   schedule:
-    - cron: '0 */2 * * *'
+    - cron: '0 */3 * * *'   # каждые 3 часа
   workflow_dispatch:
   push:
     branches:
@@ -16,7 +16,7 @@ permissions:
 jobs:
   update-vpn:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 35
 
     steps:
       - name: Checkout repository
@@ -34,22 +34,63 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Run unit tests
+        run: |
+          python -m pytest tests/ -v || python -m unittest discover -s tests -v
+
       - name: Discover new VPNs and collect verified keys
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          python vpn_finder.py --max-ping 120 --threads 35 --limit-check 800
+          python vpn_finder.py --max-ping 200 --threads 40 --limit-check 1500 --max-sub 200
+
+      - name: Update subscription badge in README
+        run: |
+          python - <<'EOF'
+          import base64, re, os, datetime
+
+          sub_path = "sub.txt"
+          readme_path = "README.md"
+
+          try:
+              raw = open(sub_path, "rb").read().strip()
+              count = len([l for l in base64.b64decode(raw).decode("utf-8").split("\n") if l.strip()])
+          except Exception:
+              count = 0
+
+          now = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
+          badge_line = f"<!-- SUB_BADGE -->\n> 🔑 **Рабочих серверов:** `{count}` &nbsp;|&nbsp; 🕐 Обновлено: `{now}`\n<!-- /SUB_BADGE -->"
+
+          content = open(readme_path, "r", encoding="utf-8").read()
+          # если бейдж уже есть — обновляем, если нет — вставляем после первого заголовка
+          if "<!-- SUB_BADGE -->" in content:
+              content = re.sub(r"<!-- SUB_BADGE -->.*?<!-- /SUB_BADGE -->", badge_line, content, flags=re.DOTALL)
+          else:
+              content = re.sub(r"(# .+\n)", r"\1\n" + badge_line + "\n", content, count=1)
+          open(readme_path, "w", encoding="utf-8").write(content)
+          print(f"README обновлён: {count} серверов, {now}")
+          EOF
 
       - name: Commit and push changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add valid_subscriptions.txt history_subs.txt working_keys.txt sub.txt
+          git add valid_subscriptions.txt history_subs.txt working_keys.txt sub.txt README.md
 
           if git diff --staged --quiet; then
             echo "No changes detected, skipping commit."
           else
-            git commit -m "Auto-update verified working keys and sub.txt [skip ci]"
+            # считаем кол-во ключей для сообщения коммита
+            COUNT=$(python3 -c "
+          import base64
+          try:
+              raw = open('sub.txt','rb').read().strip()
+              lines = [l for l in base64.b64decode(raw).decode('utf-8').split('\n') if l.strip()]
+              print(len(lines))
+          except:
+              print(0)
+          ")
+            git commit -m "chore: auto-update sub.txt — ${COUNT} working keys [skip ci]"
             git push origin main
           fi

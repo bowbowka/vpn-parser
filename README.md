@@ -1,6 +1,25 @@
-﻿# VPN Parser & Key Checker
+# VPN Parser & Key Checker
 
 Комплексный инструмент для автоматического поиска, сбора, фильтрации и проверки работоспособности VPN-ключей и подписок (VLESS Reality, VMess, Shadowsocks, Trojan, Hysteria 2, TUIC).
+
+---
+
+## 📱 Ссылка на подписку для Throne / v2rayN / Hiddify
+
+Для импорта в клиент используйте прямую ссылку:
+
+```text
+https://raw.githubusercontent.com/bowbowka/vpn-parser/main/sub.txt
+```
+
+> ### ⚡ Как добавить в Throne:
+> 1. Откройте **Throne** и перейдите в раздел **Подписки** (Subscriptions).
+> 2. Нажмите **«+»** (Добавить подписку).
+> 3. Вставьте ссылку: `https://raw.githubusercontent.com/bowbowka/vpn-parser/main/sub.txt`
+> 4. Нажмите **Сохранить** и затем **Обновить подписку**.
+> 5. Серверы загрузятся в список, готовые к подключению!
+> 
+> *База автоматически обновляется на GitHub каждые 3 часа с помощью GitHub Actions.*
 
 ---
 
@@ -8,24 +27,25 @@
 
 1. **Автоматический поиск новых VPN-источников (`vpn_finder.py`):**
    - Мониторинг актуальных курируемых репозиториев на GitHub (`mahdibland`, `yebekhe`, `freefq`, `ermaozi`, `fly` и др.).
-   - Поиск новых репозиториев через GitHub Search API.
-   - Сбор свежих ключей из публичных Telegram-каналов (без необходимости указывать API-токены).
+   - Поиск новых репозиториев через GitHub Search API с поддержкой Rate Limit.
+   - Сбор свежих ключей из публичных Telegram-каналов (без необходимости указывать API-токены), с автоматическим retry.
    - Автоматическая валидация найденных ссылок и добавление живых подписок в `valid_subscriptions.txt`.
 
 2. **Быстрый чекер доступности (`check_vpn.py`):**
    - Параллельная загрузка сотен подписок за считанные секунды.
    - Многопоточный TCP/UDP пинг нод.
-   - Фильтрация по задержке (`MAX_PING_MS`).
+   - Настраиваемая фильтрация по задержке через `--max-ping`.
 
-3. **Глубокая проверка TLS Handshake (`test_vpn_finder.py`):**
+3. **Глубокая проверка TLS Handshake (`tls_checker.py`):**
    - Проведение полного TLS-рукопожатия с передачей SNI.
    - Отсеивание серверов за Cloudflare, у которых открыт порт 443, но сам VPN-узел не отвечает.
 
-4. **Надежность и безопасность:**
+4. **Надёжность и безопасность:**
    - Автоматическое резервное копирование `working_keys.txt.bak` перед перезаписью.
-   - Атомарное сохранение через временные файлы.
-   - Защита от утечки сетевых сокетов и дескрипторов.
+   - Атомарное сохранение через временные файлы (`.tmp` → rename).
+   - Защита от двойного закрытия сетевых сокетов и дескрипторов.
    - Полная кроссплатформенность с защитой от ошибок кодировки на Windows (`UnicodeEncodeError`).
+   - **46 unit-тестов** с моком сетевых вызовов.
 
 ---
 
@@ -34,7 +54,7 @@
 Требуется Python 3.10+ и библиотека `requests`:
 
 ```bash
-pip install requests
+pip install -r requirements.txt
 ```
 
 ---
@@ -60,19 +80,32 @@ pip install requests
 
 * **Настройка параметров:**
   ```bash
-  python vpn_finder.py --max-ping 120 --threads 50
+  python vpn_finder.py --max-ping 120 --threads 50 --limit-check 2000 --max-sub 150
+  ```
+
+* **Без TLS-проверки (только TCP пинг, быстрее):**
+  ```bash
+  python vpn_finder.py --no-tls --max-ping 80
   ```
 
 ### 2. Быстрый пинг ключей из подписок
 
 ```bash
 python check_vpn.py
+python check_vpn.py --max-ping 80 --threads 50
 ```
 
 ### 3. Глубокая проверка через TLS Handshake
 
 ```bash
-python test_vpn_finder.py
+python tls_checker.py
+python tls_checker.py --max-ping 200 --threads 30
+```
+
+### 4. Запуск тестов
+
+```bash
+python -m unittest tests.test_vpn_utils -v
 ```
 
 ---
@@ -81,10 +114,36 @@ python test_vpn_finder.py
 
 | Файл | Описание |
 | :--- | :--- |
-| `vpn_finder.py` | Модуль автоматического поиска новых подписок и ключей |
-| `vpn_utils.py` | Ядро: декодирование Base64, парсинг ключей (VLESS, VMess, SS, Hy2), TLS/TCP пинг |
-| `check_vpn.py` | Быстрый параллельный TCP/UDP пингер |
-| `test_vpn_finder.py` | Глубокий TLS Handshake валидатор |
+| `vpn_finder.py` | Основной модуль: поиск подписок, сбор ключей из TG, GitHub; CLI с argparse |
+| `vpn_utils.py` | Ядро: декодирование Base64, парсинг ключей (VLESS, VMess, SS/SSR, Trojan, Hy2, TUIC), TLS/TCP пинг |
+| `check_vpn.py` | Быстрый параллельный TCP/UDP пингер с argparse |
+| `tls_checker.py` | Глубокий TLS Handshake валидатор с argparse |
+| `tests/test_vpn_utils.py` | 46 unit-тестов с моком сетевых вызовов |
 | `valid_subscriptions.txt` | База активных проверенных URL подписок |
-| `history_subs.txt` | История всех обнаруженных URL |
-| `working_keys.txt` | Список рабочих проверенных ключей с минимальным пингом |
+| `history_subs.txt` | История всех обнаруженных URL (не повторяем проверку) |
+| `working_keys.txt` | Список рабочих проверенных ключей, отсортированных по пингу |
+| `sub.txt` | Топ серверов в Base64 для импорта в Throne/v2rayN |
+
+---
+
+## ⚙️ Аргументы командной строки
+
+### `vpn_finder.py`
+
+| Аргумент | По умолчанию | Описание |
+| :--- | :--- | :--- |
+| `--find-only` | — | Только поиск новых подписок, без пинга |
+| `--check-only` | — | Только проверка существующих, без поиска |
+| `--tls` / `--no-tls` | `--tls` | Глубокая TLS проверка / только TCP |
+| `--max-ping` | `120` | Порог задержки в мс |
+| `--threads` | `35` | Число параллельных потоков |
+| `--limit-check` | `1000` | Максимум ключей за один прогон |
+| `--max-sub` | `100` | Максимум серверов в `sub.txt` |
+
+### `check_vpn.py` / `tls_checker.py`
+
+| Аргумент | По умолчанию | Описание |
+| :--- | :--- | :--- |
+| `--max-ping` | `100` / `150` | Порог задержки в мс |
+| `--threads` | `30` / `25` | Число параллельных потоков |
+| `--input` | `valid_subscriptions.txt` | Файл с подписками |
