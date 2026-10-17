@@ -2819,3 +2819,13 @@ https://raw.githubusercontent.com/uhub/awesome-dart/master/sub/all.txt
 https://raw.githubusercontent.com/uhub/awesome-dart/master/sub.txt
 https://raw.githubusercontent.com/uhub/awesome-dart/master/v2ray
 https://raw.githubusercontent.com/uhub/awesome-dart/master/sub
+https://raw.githubusercontent.com/TuftyTech/ShellShift/main/v2ray
+https://raw.githubusercontent.com/echoe32/shimmer/main/v2ray
+https://raw.githubusercontent.com/TuftyTech/ShellShift/main/sub/all.txt
+https://raw.githubusercontent.com/TuftyTech/ShellShift/main/sub/mix
+https://raw.githubusercontent.com/echoe32/shimmer/main/sub
+https://raw.githubusercontent.com/echoe32/shimmer/main/sub/mix
+https://raw.githubusercontent.com/TuftyTech/ShellShift/main/sub.txt
+https://raw.githubusercontent.com/echoe32/shimmer/main/sub/all.txt
+https://raw.githubusercontent.com/echoe32/shimmer/main/sub.txt
+https://raw.githubusercontent.com/TuftyTech/ShellShift/main/sub
