@@ -27,6 +27,7 @@ from vpn_utils import (
     parse_key_details,
     ping_and_tls_check,
     ping_key,
+    filter_and_diversify_keys,
 )
 from xray_checker import batch_verify_keys_xray, ensure_xray_binary
 
@@ -218,17 +219,24 @@ def discover_and_update_subscriptions(
 
 def safe_save_verified_keys(verified_keys: list[str], max_sub_servers: int = MAX_SUB_SERVERS):
     """
-    Сохраняет ИСКЛЮЧИТЕЛЬНО проверенные живые ключи:
-    - sub.txt: топ проверенных серверов в Base64 для Throne
-    - working_keys.txt: чистый текстовый список проверенных серверов
+    Сохраняет проверенные живые ключи:
+    - Первыми идут проверенные WolfPN ключи
+    - Затем проверенные уникальные публичные ключи с защитой от дублирования подсетей
     """
     if not verified_keys:
         print("[!] Нет проверенных ключей для сохранения.")
         return
 
-    # Объединяем новые проверенные ключи с существующими, сохраняя порядок
     existing_keys = load_lines(OUTPUT_KEYS_FILE)
-    combined = verified_keys + [k for k in existing_keys if k not in verified_keys]
+
+    # 1. Эталонные WolfPN ключи
+    wolf_keys = [k for k in existing_keys if "WolfPN" in k or "pyaterka" in k or "ozon" in k or "vkvideo" in k]
+
+    # 2. Объединяем и фильтруем публичные ключи (макс 2 ключа на подсеть, без fuck.rkn и .ir)
+    raw_public = verified_keys + [k for k in existing_keys if k not in wolf_keys]
+    diversified_public = filter_and_diversify_keys(raw_public, max_per_subnet=2)
+
+    combined = wolf_keys + [k for k in diversified_public if k not in wolf_keys]
     cleaned_keys = deduplicate_keys(combined)
 
     if not cleaned_keys:

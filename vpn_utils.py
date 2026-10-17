@@ -89,6 +89,26 @@ def clean_key(key: str) -> str:
     return key
 
 
+BLOCKED_SNI_KEYWORDS = ["rkn", "fuck", ".ir"]
+
+
+def is_sni_allowed(sni: str) -> bool:
+    """Проверяет, не заблокирован ли SNI в РФ цензурными стоп-словами."""
+    if not sni:
+        return True
+    sl = sni.lower()
+    return not any(kw in sl for kw in BLOCKED_SNI_KEYWORDS)
+
+
+def get_host_subnet(host: str) -> str:
+    """Возвращает /24 подсеть для IPv4 или домен."""
+    if is_ip_address(host):
+        parts = host.split(".")
+        if len(parts) == 4:
+            return ".".join(parts[:3])
+    return host.lower()
+
+
 def deduplicate_keys(keys: list[str]) -> list[str]:
     """Дедупликация: очищает ключи и убирает дубликаты, сохраняя порядок."""
     seen: set[str] = set()
@@ -98,6 +118,32 @@ def deduplicate_keys(keys: list[str]) -> list[str]:
         if ck and ck not in seen:
             seen.add(ck)
             result.append(ck)
+    return result
+
+
+def filter_and_diversify_keys(keys: list[str], max_per_subnet: int = 2) -> list[str]:
+    """
+    Фильтрует заблокированные в РФ SNI и ограничивает дубликаты подсетей,
+    чтобы один хостер не забивал всю подписку одинаковыми серверами.
+    """
+    subnet_count: dict[str, int] = {}
+    result: list[str] = []
+    for k in keys:
+        d = parse_key_details(k)
+        if not d:
+            continue
+        sni = d.get("sni", "")
+        host = d.get("host", "")
+        if not is_sni_allowed(sni) or not is_sni_allowed(host):
+            continue
+        # Исключаем Cloudflare IP с cloudflare SNI (часто блокируется в РФ)
+        if "cloudflare" in sni.lower() and "cloudflare" in host.lower():
+            continue
+        sub = get_host_subnet(host)
+        if subnet_count.get(sub, 0) >= max_per_subnet:
+            continue
+        subnet_count[sub] = subnet_count.get(sub, 0) + 1
+        result.append(k)
     return result
 
 
