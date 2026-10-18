@@ -336,10 +336,13 @@ def main():
 
     fetch_time = round(time.perf_counter() - start_fetch, 1)
 
-    # Очищаем, фильтруем от цензуры/спама и дедуплицируем собранные ключи
+    # Очищаем и дедуплицируем собранные ключи
+    unique_keys = deduplicate_keys(collected_keys)
+
+    # Фильтруем от цензуры/спама (порты 443/8443, без toxic SNI) и диверсифицируем по подсетям
     clean_candidates = filter_and_diversify_keys(unique_keys, max_per_subnet=3)
-    print(f"[*] Собрано {len(unique_keys)} сырых ключей (за {fetch_time} сек).")
-    print(f"[*] Отобрано {len(clean_candidates)} качественных кандидатов для проверки (порты 443/8443, без toxic SNI).")
+    print(f"[*] Собрано {len(unique_keys)} уникальных сырых ключей (за {fetch_time} сек).")
+    print(f"[*] Отобрано {len(clean_candidates)} качественных кандидатов для проверки.")
 
     if not clean_candidates:
         print("[!] Нет подходящих ключей для проверки.")
