@@ -2835,3 +2835,8 @@ https://raw.githubusercontent.com/uhub/awesome-go/master/v2ray
 https://raw.githubusercontent.com/uhub/awesome-go/master/sub
 https://raw.githubusercontent.com/uhub/awesome-go/master/sub/all.txt
 https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/All_Configs_Sub.txt
+https://raw.githubusercontent.com/noahclanman/free-xray-gcp/main/sub.txt
+https://raw.githubusercontent.com/noahclanman/free-xray-gcp/main/sub/mix
+https://raw.githubusercontent.com/noahclanman/free-xray-gcp/main/sub/all.txt
+https://raw.githubusercontent.com/noahclanman/free-xray-gcp/main/sub
+https://raw.githubusercontent.com/noahclanman/free-xray-gcp/main/v2ray
