@@ -564,3 +564,5 @@ https://raw.githubusercontent.com/Pawdroid/Free-servers/main/sub | Ключей:
 https://raw.githubusercontent.com/mahdibland/V2RayAggregator/master/sub/sub_merge.txt | Ключей: 4186
 https://raw.githubusercontent.com/roosterkid/openproxylist/main/V2RAY_RAW.txt | Ключей: 147
 https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/All_Configs_Sub.txt | Ключей: 4947
+https://raw.githubusercontent.com/Andrejewild/happ-v2rayng-configs/main/sub.txt | Ключей: 19
+https://raw.githubusercontent.com/Andrejewild/hiddify-singbox-configs-ru/main/sub.txt | Ключей: 19

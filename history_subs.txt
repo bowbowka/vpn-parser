@@ -2840,3 +2840,13 @@ https://raw.githubusercontent.com/noahclanman/free-xray-gcp/main/sub/mix
 https://raw.githubusercontent.com/noahclanman/free-xray-gcp/main/sub/all.txt
 https://raw.githubusercontent.com/noahclanman/free-xray-gcp/main/sub
 https://raw.githubusercontent.com/noahclanman/free-xray-gcp/main/v2ray
+https://raw.githubusercontent.com/Andrejewild/hiddify-singbox-configs-ru/main/sub/mix
+https://raw.githubusercontent.com/Andrejewild/hiddify-singbox-configs-ru/main/v2ray
+https://raw.githubusercontent.com/Andrejewild/happ-v2rayng-configs/main/sub/mix
+https://raw.githubusercontent.com/Andrejewild/happ-v2rayng-configs/main/v2ray
+https://raw.githubusercontent.com/Andrejewild/happ-v2rayng-configs/main/sub
+https://raw.githubusercontent.com/Andrejewild/hiddify-singbox-configs-ru/main/sub
+https://raw.githubusercontent.com/Andrejewild/hiddify-singbox-configs-ru/main/sub/all.txt
+https://raw.githubusercontent.com/Andrejewild/happ-v2rayng-configs/main/sub.txt
+https://raw.githubusercontent.com/Andrejewild/hiddify-singbox-configs-ru/main/sub.txt
+https://raw.githubusercontent.com/Andrejewild/happ-v2rayng-configs/main/sub/all.txt
