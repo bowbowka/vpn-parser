@@ -2850,3 +2850,8 @@ https://raw.githubusercontent.com/Andrejewild/hiddify-singbox-configs-ru/main/su
 https://raw.githubusercontent.com/Andrejewild/happ-v2rayng-configs/main/sub.txt
 https://raw.githubusercontent.com/Andrejewild/hiddify-singbox-configs-ru/main/sub.txt
 https://raw.githubusercontent.com/Andrejewild/happ-v2rayng-configs/main/sub/all.txt
+https://raw.githubusercontent.com/z9wen/personal-infra-toolkit/main/v2ray
+https://raw.githubusercontent.com/z9wen/personal-infra-toolkit/main/sub
+https://raw.githubusercontent.com/z9wen/personal-infra-toolkit/main/sub/mix
+https://raw.githubusercontent.com/z9wen/personal-infra-toolkit/main/sub.txt
+https://raw.githubusercontent.com/z9wen/personal-infra-toolkit/main/sub/all.txt
