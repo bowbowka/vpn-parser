@@ -2865,3 +2865,8 @@ https://raw.githubusercontent.com/mnochernadi/router/main/sub/mix
 https://raw.githubusercontent.com/mnochernadi/router/main/sub
 https://raw.githubusercontent.com/mnochernadi/router/main/v2ray
 https://raw.githubusercontent.com/mnochernadi/router/main/sub.txt
+https://raw.githubusercontent.com/mehdirzfx/v2ray-sub/main/sub.txt
+https://raw.githubusercontent.com/mehdirzfx/v2ray-sub/main/sub
+https://raw.githubusercontent.com/mehdirzfx/v2ray-sub/main/sub/mix
+https://raw.githubusercontent.com/mehdirzfx/v2ray-sub/main/v2ray
+https://raw.githubusercontent.com/mehdirzfx/v2ray-sub/main/sub/all.txt
