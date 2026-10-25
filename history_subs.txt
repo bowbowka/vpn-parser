@@ -2870,3 +2870,8 @@ https://raw.githubusercontent.com/mehdirzfx/v2ray-sub/main/sub
 https://raw.githubusercontent.com/mehdirzfx/v2ray-sub/main/sub/mix
 https://raw.githubusercontent.com/mehdirzfx/v2ray-sub/main/v2ray
 https://raw.githubusercontent.com/mehdirzfx/v2ray-sub/main/sub/all.txt
+https://raw.githubusercontent.com/mehrdadmb2/NodeForge/main/v2ray
+https://raw.githubusercontent.com/mehrdadmb2/NodeForge/main/sub/mix
+https://raw.githubusercontent.com/mehrdadmb2/NodeForge/main/sub/all.txt
+https://raw.githubusercontent.com/mehrdadmb2/NodeForge/main/sub
+https://raw.githubusercontent.com/mehrdadmb2/NodeForge/main/sub.txt
