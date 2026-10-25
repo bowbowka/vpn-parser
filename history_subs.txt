@@ -2875,3 +2875,8 @@ https://raw.githubusercontent.com/mehrdadmb2/NodeForge/main/sub/mix
 https://raw.githubusercontent.com/mehrdadmb2/NodeForge/main/sub/all.txt
 https://raw.githubusercontent.com/mehrdadmb2/NodeForge/main/sub
 https://raw.githubusercontent.com/mehrdadmb2/NodeForge/main/sub.txt
+https://raw.githubusercontent.com/musicOverdose/xray-config-bench/main/sub
+https://raw.githubusercontent.com/musicOverdose/xray-config-bench/main/v2ray
+https://raw.githubusercontent.com/musicOverdose/xray-config-bench/main/sub.txt
+https://raw.githubusercontent.com/musicOverdose/xray-config-bench/main/sub/mix
+https://raw.githubusercontent.com/musicOverdose/xray-config-bench/main/sub/all.txt
