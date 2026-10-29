@@ -2890,3 +2890,8 @@ https://raw.githubusercontent.com/aipo-lenshow/EdgeNest/main/sub/all.txt
 https://raw.githubusercontent.com/aipo-lenshow/EdgeNest/main/v2ray
 https://raw.githubusercontent.com/aipo-lenshow/EdgeNest/main/sub.txt
 https://raw.githubusercontent.com/aipo-lenshow/EdgeNest/main/sub
+https://raw.githubusercontent.com/VkRainB/github-star-lists/main/sub/all.txt
+https://raw.githubusercontent.com/VkRainB/github-star-lists/main/sub/mix
+https://raw.githubusercontent.com/VkRainB/github-star-lists/main/sub.txt
+https://raw.githubusercontent.com/VkRainB/github-star-lists/main/sub
+https://raw.githubusercontent.com/VkRainB/github-star-lists/main/v2ray
