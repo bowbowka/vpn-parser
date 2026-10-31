@@ -2905,3 +2905,8 @@ https://raw.githubusercontent.com/chok8356/sing-box-panel/master/sub/mix
 https://raw.githubusercontent.com/chok8356/sing-box-panel/master/v2ray
 https://raw.githubusercontent.com/chok8356/sing-box-panel/master/sub.txt
 https://raw.githubusercontent.com/chok8356/sing-box-panel/master/sub
+https://raw.githubusercontent.com/CNT-Cafe/Public-Configs/main/sub/mix
+https://raw.githubusercontent.com/CNT-Cafe/Public-Configs/main/sub/all.txt
+https://raw.githubusercontent.com/CNT-Cafe/Public-Configs/main/sub.txt
+https://raw.githubusercontent.com/CNT-Cafe/Public-Configs/main/sub
+https://raw.githubusercontent.com/CNT-Cafe/Public-Configs/main/v2ray
