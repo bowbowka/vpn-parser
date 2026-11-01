@@ -2910,3 +2910,8 @@ https://raw.githubusercontent.com/CNT-Cafe/Public-Configs/main/sub/all.txt
 https://raw.githubusercontent.com/CNT-Cafe/Public-Configs/main/sub.txt
 https://raw.githubusercontent.com/CNT-Cafe/Public-Configs/main/sub
 https://raw.githubusercontent.com/CNT-Cafe/Public-Configs/main/v2ray
+https://raw.githubusercontent.com/zoroqi/my-awesome/master/v2ray
+https://raw.githubusercontent.com/zoroqi/my-awesome/master/sub/mix
+https://raw.githubusercontent.com/zoroqi/my-awesome/master/sub
+https://raw.githubusercontent.com/zoroqi/my-awesome/master/sub.txt
+https://raw.githubusercontent.com/zoroqi/my-awesome/master/sub/all.txt
