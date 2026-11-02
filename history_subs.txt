@@ -2915,3 +2915,8 @@ https://raw.githubusercontent.com/zoroqi/my-awesome/master/sub/mix
 https://raw.githubusercontent.com/zoroqi/my-awesome/master/sub
 https://raw.githubusercontent.com/zoroqi/my-awesome/master/sub.txt
 https://raw.githubusercontent.com/zoroqi/my-awesome/master/sub/all.txt
+https://raw.githubusercontent.com/arminsameti/Keyway/master/v2ray
+https://raw.githubusercontent.com/arminsameti/Keyway/master/sub.txt
+https://raw.githubusercontent.com/arminsameti/Keyway/master/sub
+https://raw.githubusercontent.com/arminsameti/Keyway/master/sub/all.txt
+https://raw.githubusercontent.com/arminsameti/Keyway/master/sub/mix
