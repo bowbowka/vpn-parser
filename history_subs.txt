@@ -2925,3 +2925,8 @@ https://raw.githubusercontent.com/kankiturk8770/kanki-panel/main/sub.txt
 https://raw.githubusercontent.com/kankiturk8770/kanki-panel/main/v2ray
 https://raw.githubusercontent.com/kankiturk8770/kanki-panel/main/sub/all.txt
 https://raw.githubusercontent.com/kankiturk8770/kanki-panel/main/sub/mix
+https://raw.githubusercontent.com/jimabby/airport-tool/main/sub.txt
+https://raw.githubusercontent.com/jimabby/airport-tool/main/v2ray
+https://raw.githubusercontent.com/jimabby/airport-tool/main/sub/all.txt
+https://raw.githubusercontent.com/jimabby/airport-tool/main/sub/mix
+https://raw.githubusercontent.com/jimabby/airport-tool/main/sub
