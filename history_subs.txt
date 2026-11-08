@@ -2930,3 +2930,8 @@ https://raw.githubusercontent.com/jimabby/airport-tool/main/v2ray
 https://raw.githubusercontent.com/jimabby/airport-tool/main/sub/all.txt
 https://raw.githubusercontent.com/jimabby/airport-tool/main/sub/mix
 https://raw.githubusercontent.com/jimabby/airport-tool/main/sub
+https://raw.githubusercontent.com/Ferrocite/ferrox/main/sub.txt
+https://raw.githubusercontent.com/Ferrocite/ferrox/main/v2ray
+https://raw.githubusercontent.com/Ferrocite/ferrox/main/sub/all.txt
+https://raw.githubusercontent.com/Ferrocite/ferrox/main/sub
+https://raw.githubusercontent.com/Ferrocite/ferrox/main/sub/mix
