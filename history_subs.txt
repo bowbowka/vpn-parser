@@ -2935,3 +2935,8 @@ https://raw.githubusercontent.com/Ferrocite/ferrox/main/v2ray
 https://raw.githubusercontent.com/Ferrocite/ferrox/main/sub/all.txt
 https://raw.githubusercontent.com/Ferrocite/ferrox/main/sub
 https://raw.githubusercontent.com/Ferrocite/ferrox/main/sub/mix
+https://raw.githubusercontent.com/amrfateem/luci-V2raya-NextGen/main/v2ray
+https://raw.githubusercontent.com/amrfateem/luci-V2raya-NextGen/main/sub/mix
+https://raw.githubusercontent.com/amrfateem/luci-V2raya-NextGen/main/sub/all.txt
+https://raw.githubusercontent.com/amrfateem/luci-V2raya-NextGen/main/sub
+https://raw.githubusercontent.com/amrfateem/luci-V2raya-NextGen/main/sub.txt
