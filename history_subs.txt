@@ -2940,3 +2940,8 @@ https://raw.githubusercontent.com/amrfateem/luci-V2raya-NextGen/main/sub/mix
 https://raw.githubusercontent.com/amrfateem/luci-V2raya-NextGen/main/sub/all.txt
 https://raw.githubusercontent.com/amrfateem/luci-V2raya-NextGen/main/sub
 https://raw.githubusercontent.com/amrfateem/luci-V2raya-NextGen/main/sub.txt
+https://raw.githubusercontent.com/ivanprochorov2022-debug/V2RayN-VPN-Source/main/sub/mix
+https://raw.githubusercontent.com/ivanprochorov2022-debug/V2RayN-VPN-Source/main/sub/all.txt
+https://raw.githubusercontent.com/ivanprochorov2022-debug/V2RayN-VPN-Source/main/v2ray
+https://raw.githubusercontent.com/ivanprochorov2022-debug/V2RayN-VPN-Source/main/sub.txt
+https://raw.githubusercontent.com/ivanprochorov2022-debug/V2RayN-VPN-Source/main/sub
