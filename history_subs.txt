@@ -2945,3 +2945,8 @@ https://raw.githubusercontent.com/ivanprochorov2022-debug/V2RayN-VPN-Source/main
 https://raw.githubusercontent.com/ivanprochorov2022-debug/V2RayN-VPN-Source/main/v2ray
 https://raw.githubusercontent.com/ivanprochorov2022-debug/V2RayN-VPN-Source/main/sub.txt
 https://raw.githubusercontent.com/ivanprochorov2022-debug/V2RayN-VPN-Source/main/sub
+https://raw.githubusercontent.com/hazhanhasani/noraproxy/main/sub/all.txt
+https://raw.githubusercontent.com/hazhanhasani/noraproxy/main/sub
+https://raw.githubusercontent.com/hazhanhasani/noraproxy/main/sub/mix
+https://raw.githubusercontent.com/hazhanhasani/noraproxy/main/sub.txt
+https://raw.githubusercontent.com/hazhanhasani/noraproxy/main/v2ray
