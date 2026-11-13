@@ -2950,3 +2950,8 @@ https://raw.githubusercontent.com/hazhanhasani/noraproxy/main/sub
 https://raw.githubusercontent.com/hazhanhasani/noraproxy/main/sub/mix
 https://raw.githubusercontent.com/hazhanhasani/noraproxy/main/sub.txt
 https://raw.githubusercontent.com/hazhanhasani/noraproxy/main/v2ray
+https://raw.githubusercontent.com/souxls/Collections/master/sub/all.txt
+https://raw.githubusercontent.com/souxls/Collections/master/sub/mix
+https://raw.githubusercontent.com/souxls/Collections/master/sub
+https://raw.githubusercontent.com/souxls/Collections/master/sub.txt
+https://raw.githubusercontent.com/souxls/Collections/master/v2ray
