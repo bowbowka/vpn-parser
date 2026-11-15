@@ -2955,3 +2955,8 @@ https://raw.githubusercontent.com/souxls/Collections/master/sub/mix
 https://raw.githubusercontent.com/souxls/Collections/master/sub
 https://raw.githubusercontent.com/souxls/Collections/master/sub.txt
 https://raw.githubusercontent.com/souxls/Collections/master/v2ray
+https://raw.githubusercontent.com/shivytyahoo/IPChakra/main/sub
+https://raw.githubusercontent.com/shivytyahoo/IPChakra/main/sub/mix
+https://raw.githubusercontent.com/shivytyahoo/IPChakra/main/sub.txt
+https://raw.githubusercontent.com/shivytyahoo/IPChakra/main/v2ray
+https://raw.githubusercontent.com/shivytyahoo/IPChakra/main/sub/all.txt
