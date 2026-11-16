@@ -2980,3 +2980,8 @@ https://raw.githubusercontent.com/ZeroDeng01/sublinkPro/main/sub
 https://raw.githubusercontent.com/ZeroDeng01/sublinkPro/main/sub/mix
 https://raw.githubusercontent.com/ZeroDeng01/sublinkPro/main/v2ray
 https://raw.githubusercontent.com/ZeroDeng01/sublinkPro/main/sub/all.txt
+https://raw.githubusercontent.com/toolbbs/codew/main/sub
+https://raw.githubusercontent.com/toolbbs/codew/main/sub.txt
+https://raw.githubusercontent.com/toolbbs/codew/main/sub/mix
+https://raw.githubusercontent.com/toolbbs/codew/main/v2ray
+https://raw.githubusercontent.com/toolbbs/codew/main/sub/all.txt
