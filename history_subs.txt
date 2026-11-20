@@ -2985,3 +2985,8 @@ https://raw.githubusercontent.com/toolbbs/codew/main/sub.txt
 https://raw.githubusercontent.com/toolbbs/codew/main/sub/mix
 https://raw.githubusercontent.com/toolbbs/codew/main/v2ray
 https://raw.githubusercontent.com/toolbbs/codew/main/sub/all.txt
+https://raw.githubusercontent.com/ferroxdev/ferrox-audit/main/sub.txt
+https://raw.githubusercontent.com/ferroxdev/ferrox-audit/main/v2ray
+https://raw.githubusercontent.com/ferroxdev/ferrox-audit/main/sub/all.txt
+https://raw.githubusercontent.com/ferroxdev/ferrox-audit/main/sub
+https://raw.githubusercontent.com/ferroxdev/ferrox-audit/main/sub/mix
