@@ -3010,3 +3010,13 @@ https://raw.githubusercontent.com/MarselNet86/configs-for-vpn/main/sub.txt
 https://raw.githubusercontent.com/MarselNet86/configs-for-vpn/main/sub/mix
 https://raw.githubusercontent.com/MarselNet86/configs-for-vpn/main/sub/all.txt
 https://raw.githubusercontent.com/MarselNet86/configs-for-vpn/main/v2ray
+https://raw.githubusercontent.com/AJayBBB/stars/master/sub/all.txt
+https://raw.githubusercontent.com/AJayBBB/stars/master/sub/mix
+https://raw.githubusercontent.com/autosspd/sublinkPro/main/sub/all.txt
+https://raw.githubusercontent.com/AJayBBB/stars/master/v2ray
+https://raw.githubusercontent.com/autosspd/sublinkPro/main/v2ray
+https://raw.githubusercontent.com/autosspd/sublinkPro/main/sub/mix
+https://raw.githubusercontent.com/autosspd/sublinkPro/main/sub
+https://raw.githubusercontent.com/autosspd/sublinkPro/main/sub.txt
+https://raw.githubusercontent.com/AJayBBB/stars/master/sub.txt
+https://raw.githubusercontent.com/AJayBBB/stars/master/sub
