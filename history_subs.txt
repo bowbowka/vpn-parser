@@ -3005,3 +3005,8 @@ https://raw.githubusercontent.com/yashhasan570/Universal-Opensource-Softwares/ma
 https://raw.githubusercontent.com/yashhasan570/Universal-Opensource-Softwares/main/sub
 https://raw.githubusercontent.com/stephenchou888/my-stars-digest/main/sub.txt
 https://raw.githubusercontent.com/yashhasan570/Universal-Opensource-Softwares/main/v2ray
+https://raw.githubusercontent.com/MarselNet86/configs-for-vpn/main/sub
+https://raw.githubusercontent.com/MarselNet86/configs-for-vpn/main/sub.txt
+https://raw.githubusercontent.com/MarselNet86/configs-for-vpn/main/sub/mix
+https://raw.githubusercontent.com/MarselNet86/configs-for-vpn/main/sub/all.txt
+https://raw.githubusercontent.com/MarselNet86/configs-for-vpn/main/v2ray
