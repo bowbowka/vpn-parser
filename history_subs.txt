@@ -3020,3 +3020,8 @@ https://raw.githubusercontent.com/autosspd/sublinkPro/main/sub
 https://raw.githubusercontent.com/autosspd/sublinkPro/main/sub.txt
 https://raw.githubusercontent.com/AJayBBB/stars/master/sub.txt
 https://raw.githubusercontent.com/AJayBBB/stars/master/sub
+https://raw.githubusercontent.com/rtwo2/FastNodes/main/sub.txt
+https://raw.githubusercontent.com/rtwo2/FastNodes/main/v2ray
+https://raw.githubusercontent.com/rtwo2/FastNodes/main/sub/all.txt
+https://raw.githubusercontent.com/rtwo2/FastNodes/main/sub
+https://raw.githubusercontent.com/rtwo2/FastNodes/main/sub/mix
