@@ -3025,3 +3025,8 @@ https://raw.githubusercontent.com/rtwo2/FastNodes/main/v2ray
 https://raw.githubusercontent.com/rtwo2/FastNodes/main/sub/all.txt
 https://raw.githubusercontent.com/rtwo2/FastNodes/main/sub
 https://raw.githubusercontent.com/rtwo2/FastNodes/main/sub/mix
+https://raw.githubusercontent.com/TheCalmBoy/proxy-collector/main/v2ray
+https://raw.githubusercontent.com/TheCalmBoy/proxy-collector/main/sub
+https://raw.githubusercontent.com/TheCalmBoy/proxy-collector/main/sub/mix
+https://raw.githubusercontent.com/TheCalmBoy/proxy-collector/main/sub.txt
+https://raw.githubusercontent.com/TheCalmBoy/proxy-collector/main/sub/all.txt
